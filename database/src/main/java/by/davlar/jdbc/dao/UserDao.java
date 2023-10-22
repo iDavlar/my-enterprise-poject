@@ -98,12 +98,12 @@ public class UserDao
     protected User buildEntity(ResultSet resultSet) throws SQLException {
         return User.builder()
                 .id(resultSet.getInt("id"))
-                .firstName(resultSet.getString("first_name"))
-                .lastName(resultSet.getString("last_name"))
+                .firstName(resultSet.getString("first_name").trim())
+                .lastName(resultSet.getString("last_name").trim())
                 .birthday(resultSet.getTimestamp("birthday").toLocalDateTime().toLocalDate())
-                .login(resultSet.getString("login"))
-                .password(resultSet.getString("password"))
-                .telephone(resultSet.getString("telephone"))
+                .login(resultSet.getString("login").trim())
+                .password(resultSet.getString("password").trim())
+                .telephone(resultSet.getString("telephone").trim())
                 .build();
     }
 

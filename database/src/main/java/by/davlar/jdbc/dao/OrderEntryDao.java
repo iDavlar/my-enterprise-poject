@@ -16,23 +16,23 @@ public class OrderEntryDao extends AbstractDao<Integer, OrderEntry> {
             """;
 
     private static final String DELETE_SQL = """
-            DELETE FROM pizzeria.pizzas
+            DELETE FROM pizzeria.order_entries
             WHERE id = ?
             """;
 
     private static final String FIND_ALL_SQL = """
             SELECT id, order_id, pizza_id, amount
-             FROM pizzeria.pizzas
+             FROM pizzeria.order_entries
             """;
 
     private static final String FIND_BY_ID_SQL = """
             SELECT id, order_id, pizza_id, amount
-             FROM pizzeria.pizzas
+             FROM pizzeria.order_entries
              where id = ?
             """;
 
     private static final String UPDATE_SQL = """
-            UPDATE pizzeria.pizzas
+            UPDATE pizzeria.order_entries
             SET order_id    = ?,
                 pizza_id    = ?,
                 amount      = ?

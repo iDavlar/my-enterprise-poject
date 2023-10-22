@@ -3,7 +3,7 @@ package by.davlar.jdbc.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -11,7 +11,7 @@ public class Order {
     private Integer id;
     private Integer userId;
     private Integer addressId;
-    private LocalDateTime date;
+    private Timestamp date;
     private User user;
     private Address address;
 }

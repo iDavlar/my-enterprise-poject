@@ -98,10 +98,10 @@ public class AddressDao extends AbstractDao<Integer, Address> {
         return Address.builder()
                 .id(resultSet.getInt("id"))
                 .userId(resultSet.getInt("user_id"))
-                .city(resultSet.getString("city"))
-                .region(resultSet.getString("region"))
-                .street(resultSet.getString("street"))
-                .apartment(resultSet.getString("apartment"))
+                .city(resultSet.getString("city").trim())
+                .region(resultSet.getString("region").trim())
+                .street(resultSet.getString("street").trim())
+                .apartment(resultSet.getString("apartment").trim())
                 .build();
     }
 

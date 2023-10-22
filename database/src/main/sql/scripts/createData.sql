@@ -53,7 +53,7 @@ create table pizzeria.orders
     id         serial primary key,
     user_id    int references pizzeria.users   not null,
     address_id int references pizzeria.address not null,
-    data       date                            not null
+    data       timestamp                       not null
 );
 
 create table pizzeria.order_entries
@@ -67,20 +67,20 @@ create table pizzeria.order_entries
 /*
  insert section
  */
-delete
-from pizzeria.order_entries;
-
-delete
-from pizzeria.orders;
-
-delete
-from pizzeria.pizzas;
-
-delete
-from pizzeria.address;
-
-delete
-from pizzeria.users;
+-- delete
+-- from pizzeria.order_entries;
+--
+-- delete
+-- from pizzeria.orders;
+--
+-- delete
+-- from pizzeria.pizzas;
+--
+-- delete
+-- from pizzeria.address;
+--
+-- delete
+-- from pizzeria.users;
 
 insert into pizzeria.users (first_name, last_name, birthday, login, password, telephone)
 VALUES ('Даниил', 'Ардюков', '1997.11.28', 'Davlar', '123456', '88005553535'),

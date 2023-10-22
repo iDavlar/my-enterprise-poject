@@ -88,7 +88,7 @@ public class PizzaDao extends AbstractDao<Integer, Pizza> {
     protected Pizza buildEntity(ResultSet resultSet) throws SQLException {
         return Pizza.builder()
                 .id(resultSet.getInt("id"))
-                .name(resultSet.getString("name"))
+                .name(resultSet.getString("name").trim())
                 .cost(resultSet.getInt("cost"))
                 .build();
     }

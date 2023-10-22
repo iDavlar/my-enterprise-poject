@@ -11,31 +11,32 @@ public class OrderDao extends AbstractDao<Integer, Order> {
     private static final OrderDao INSTANCE = new OrderDao();
 
     private static final String SAVE_SQL = """
-            INSERT INTO pizzeria.pizzas
-            (name, cost) 
-            VALUES (?, ?);
+            INSERT INTO pizzeria.orders
+            (user_id, address_id, data) 
+            VALUES (?, ?, ?);
             """;
 
     private static final String DELETE_SQL = """
-            DELETE FROM pizzeria.pizzas
+            DELETE FROM pizzeria.orders
             WHERE id = ?
             """;
 
     private static final String FIND_ALL_SQL = """
-            SELECT id, name, cost
-             FROM pizzeria.pizzas
+            SELECT id, user_id, address_id, data
+             FROM pizzeria.orders
             """;
 
     private static final String FIND_BY_ID_SQL = """
-            SELECT id, name, cost
-             FROM pizzeria.pizzas
+            SELECT id, user_id, address_id, data
+             FROM pizzeria.orders
              where id = ?
             """;
 
     private static final String UPDATE_SQL = """
-            UPDATE pizzeria.pizzas
-            SET name    = ?,
-                cost    = ?
+            UPDATE pizzeria.orders
+            SET user_id     = ?,
+                address_id  = ?,
+                data        = ?
             WHERE id = ?
             """;
 
@@ -83,7 +84,7 @@ public class OrderDao extends AbstractDao<Integer, Order> {
     private void setNoPrimaryParameters(PreparedStatement statement, Order entity) throws SQLException {
         statement.setInt(1, entity.getUserId());
         statement.setInt(2, entity.getAddressId());
-        statement.setTimestamp(3, Timestamp.valueOf(entity.getDate()));
+        statement.setTimestamp(3, entity.getDate());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class OrderDao extends AbstractDao<Integer, Order> {
                 .id(resultSet.getInt("id"))
                 .userId(resultSet.getInt("user_id"))
                 .addressId(resultSet.getInt("address_id"))
-                .date(resultSet.getTimestamp("data").toLocalDateTime())
+                .date(resultSet.getTimestamp("data"))
                 .build();
     }
 
