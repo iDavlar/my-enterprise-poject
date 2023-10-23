@@ -1,17 +1,11 @@
 package by.davlar.jdbc.dao;
 
-import by.davlar.jdbc.entity.Address;
 import by.davlar.jdbc.entity.Order;
 import by.davlar.jdbc.utils.ConnectionManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 

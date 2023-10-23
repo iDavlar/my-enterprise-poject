@@ -10,6 +10,7 @@
     <name>my-enterprise-project</name>
     <modules>
         <module>database</module>
+        <module>service</module>
     </modules>
 
     <properties>
@@ -47,6 +48,16 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>42.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>by.davlar</groupId>
+                <artifactId>database</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>by.davlar</groupId>
+                <artifactId>service</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -2,12 +2,9 @@ package by.davlar.jdbc.dao;
 
 import by.davlar.jdbc.entity.User;
 import by.davlar.jdbc.utils.ConnectionManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,7 +19,7 @@ public class UserDaoTest {
         User entity = User.builder()
                 .firstName("Test")
                 .lastName("Test")
-                .birthday(LocalDate.from(LocalDateTime.now()))
+                .birthday(Date.valueOf(LocalDate.from(LocalDateTime.now())))
                 .login("Test")
                 .password("1234567")
                 .telephone("1234567")

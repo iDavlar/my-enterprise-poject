@@ -88,7 +88,7 @@ public class UserDao
     private void setNoPrimaryParameters(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getFirstName());
         statement.setString(2, entity.getLastName());
-        statement.setTimestamp(3, Timestamp.valueOf(entity.getBirthday().atStartOfDay()));
+        statement.setDate(3, entity.getBirthday());
         statement.setString(4, entity.getLogin());
         statement.setString(5, entity.getPassword());
         statement.setString(6, entity.getTelephone());
@@ -100,7 +100,7 @@ public class UserDao
                 .id(resultSet.getInt("id"))
                 .firstName(resultSet.getString("first_name").trim())
                 .lastName(resultSet.getString("last_name").trim())
-                .birthday(resultSet.getTimestamp("birthday").toLocalDateTime().toLocalDate())
+                .birthday(resultSet.getDate("birthday"))
                 .login(resultSet.getString("login").trim())
                 .password(resultSet.getString("password").trim())
                 .telephone(resultSet.getString("telephone").trim())
