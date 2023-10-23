@@ -4,6 +4,7 @@ import by.davlar.jdbc.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
@@ -26,6 +27,18 @@ public class UserDto {
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .telephone(user.getTelephone())
+                .build();
+    }
+
+    public User toEntity() {
+        return User.builder()
+                .id(this.getId())
+                .firstName(this.getFirstName())
+                .lastName(this.getLastName())
+                .birthday(Date.valueOf(this.getBirthday()))
+                .login(this.getLogin())
+                .password(this.getPassword())
+                .telephone(this.getTelephone())
                 .build();
     }
 }
