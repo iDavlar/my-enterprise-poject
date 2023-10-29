@@ -12,6 +12,8 @@ drop table if exists pizzeria.address;
 
 drop table if exists pizzeria.users;
 
+drop table if exists pizzeria.roles;
+
 drop schema if exists pizzeria;
 
 /*
@@ -20,15 +22,23 @@ drop schema if exists pizzeria;
 
 create schema if not exists pizzeria;
 
+create table pizzeria.roles
+(
+    id      serial primary key,
+    name    char(100) not null,
+    isAdmin boolean   not null
+);
+
 create table pizzeria.users
 (
     id         serial primary key,
-    first_name char(100) not null,
-    last_name  char(100) not null,
-    birthday   date      not null,
-    login      char(30)  not null,
-    password   char(20)  not null,
-    telephone  char(20)  not null
+    first_name char(100)                     not null,
+    last_name  char(100)                     not null,
+    birthday   date                          not null,
+    login      char(30)                      not null,
+    password   char(20)                      not null,
+    telephone  char(20)                      not null,
+    role       int references pizzeria.roles not null
 );
 
 create table pizzeria.address
@@ -82,12 +92,16 @@ create table pizzeria.order_entries
 -- delete
 -- from pizzeria.users;
 
-insert into pizzeria.users (first_name, last_name, birthday, login, password, telephone)
-VALUES ('Даниил', 'Ардюков', '1997.11.28', 'Davlar', '123456', '88005553535'),
-       ('Егор', 'Носов', '1990.01.30', 'EgorNos', '123456', '454647'),
-       ('Глеб', 'Дмитриев', '2002.07.15', 'GlebDmi', '123456', '+79023456789'),
-       ('Анна', 'Петрова', '1980.01.10', 'PetrovAn', '123456', '332244'),
-       ('Мария', 'Павлова', '1997.03.20', 'MashPaw', '123456', '89021234567');
+insert into pizzeria.roles (name, isAdmin)
+values ('ADMIN', true),
+       ('USER', false);
+
+insert into pizzeria.users (first_name, last_name, birthday, login, password, telephone, role)
+VALUES ('Даниил', 'Ардюков', '1997.11.28', 'Davlar', '123456', '88005553535', 1),
+       ('Егор', 'Носов', '1990.01.30', 'EgorNos', '123456', '454647', 2),
+       ('Глеб', 'Дмитриев', '2002.07.15', 'GlebDmi', '123456', '+79023456789', 2),
+       ('Анна', 'Петрова', '1980.01.10', 'PetrovAn', '123456', '332244', 2),
+       ('Мария', 'Павлова', '1997.03.20', 'MashPaw', '123456', '89021234567', 2);
 
 insert into pizzeria.address (user_id, city, region, street, apartment)
 VALUES (1, 'Актау', null, '3 - 9', '15'),

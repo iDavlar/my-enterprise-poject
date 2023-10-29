@@ -1,5 +1,6 @@
 package by.davlar.jdbc.entity;
 
+import by.davlar.jdbc.dao.RoleDao;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,4 +16,6 @@ public class User {
     private String login;
     private String password;
     private String telephone;
+    private Integer roleId;
+    private Role role;
 }

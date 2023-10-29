@@ -13,8 +13,8 @@ public class UserDao
 
     private static final String SAVE_SQL = """
             INSERT INTO pizzeria.users
-            (first_name, last_name, birthday, login, password, telephone) 
-            VALUES (?, ?, ?, ?, ?, ?);
+            (first_name, last_name, birthday, login, password, telephone, role) 
+            VALUES (?, ?, ?, ?, ?, ?, ?);
             """;
 
     private static final String DELETE_SQL = """
@@ -23,12 +23,12 @@ public class UserDao
             """;
 
     private static final String FIND_ALL_SQL = """
-            SELECT id, first_name, last_name, birthday, login, password, telephone
+            SELECT id, first_name, last_name, birthday, login, password, telephone, role
              FROM pizzeria.users
             """;
 
     private static final String FIND_BY_ID_SQL = """
-            SELECT id, first_name, last_name, birthday, login, password, telephone
+            SELECT id, first_name, last_name, birthday, login, password, telephone, role
              FROM pizzeria.users
              where id = ?
             """;
@@ -40,7 +40,8 @@ public class UserDao
                 birthday    = ?,
                 login       = ?,
                 password    = ?,
-                telephone   = ?
+                telephone   = ?,
+                role        = ?
             WHERE id = ?
             """;
 
@@ -82,7 +83,7 @@ public class UserDao
     @Override
     protected void setParametersUpdate(PreparedStatement statement, User entity) throws SQLException {
         setNoPrimaryParameters(statement, entity);
-        statement.setInt(7, entity.getId());
+        statement.setInt(8, entity.getId());
     }
 
     private void setNoPrimaryParameters(PreparedStatement statement, User entity) throws SQLException {
@@ -92,6 +93,7 @@ public class UserDao
         statement.setString(4, entity.getLogin());
         statement.setString(5, entity.getPassword());
         statement.setString(6, entity.getTelephone());
+        statement.setInt(7, entity.getRoleId());
     }
 
     @Override
@@ -104,6 +106,7 @@ public class UserDao
                 .login(resultSet.getString("login").trim())
                 .password(resultSet.getString("password").trim())
                 .telephone(resultSet.getString("telephone").trim())
+                .roleId(resultSet.getInt("role"))
                 .build();
     }
 

@@ -1,7 +1,10 @@
 package by.davlar.service;
 
+import by.davlar.dto.CreateUserDto;
 import by.davlar.dto.UserDto;
 import by.davlar.jdbc.dao.UserDao;
+import by.davlar.jdbc.entity.User;
+import by.davlar.mapper.CreateUserDtoToUserMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class UserService {
     private static final UserService INSTANCE = new UserService();
+    private final CreateUserDtoToUserMapper createUserDtoToUserMapper = CreateUserDtoToUserMapper.getInstance();
     private final UserDao userDao = UserDao.getInstance();
 
     public static UserService getInstance() {
@@ -22,5 +26,11 @@ public class UserService {
         return userDao.findAll().stream()
                 .map(UserDto::from)
                 .collect(Collectors.toList());
+    }
+
+    public Integer create(CreateUserDto createUserDto) {
+        User user = createUserDtoToUserMapper.mapFrom(createUserDto);
+        userDao.save(user);
+        return user.getId();
     }
 }

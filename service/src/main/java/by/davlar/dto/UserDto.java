@@ -17,6 +17,8 @@ public class UserDto {
     private String login;
     private String password;
     private String telephone;
+    private Integer roleId;
+    private RoleDto role;
 
     public static UserDto from(User user) {
         return UserDto.builder()
@@ -27,6 +29,7 @@ public class UserDto {
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .telephone(user.getTelephone())
+                .roleId(user.getRoleId())
                 .build();
     }
 
@@ -39,6 +42,7 @@ public class UserDto {
                 .login(this.getLogin())
                 .password(this.getPassword())
                 .telephone(this.getTelephone())
+                .roleId(this.getRoleId())
                 .build();
     }
 }
