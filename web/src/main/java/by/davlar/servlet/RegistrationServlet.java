@@ -2,7 +2,9 @@ package by.davlar.servlet;
 
 import by.davlar.dto.CreateUserDto;
 import by.davlar.dto.RoleDto;
+import by.davlar.exceptions.ValidationException;
 import by.davlar.service.RoleService;
+import by.davlar.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,12 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import utils.JspHelper;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
-    private static final RoleService roleService = RoleService.getInstance();
+    private final RoleService roleService = RoleService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,6 +43,12 @@ public class RegistrationServlet extends HttpServlet {
                 .role(req.getParameter("role"))
                 .build();
 
-
+        try {
+            userService.create(userDto);
+            resp.sendRedirect("/login");
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+            doGet(req, resp);
+        }
     }
 }
