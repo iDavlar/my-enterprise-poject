@@ -1,11 +1,15 @@
 package by.davlar.jdbc.dao;
 
+import by.davlar.jdbc.entity.Role;
 import by.davlar.jdbc.entity.User;
+import by.davlar.jdbc.exception.DaoException;
+import by.davlar.jdbc.utils.ConnectionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 public class UserDao
         extends AbstractDao<Integer, User> {
@@ -43,6 +47,12 @@ public class UserDao
                 telephone   = ?,
                 role        = ?
             WHERE id = ?
+            """;
+
+    private static final String FIND_BY_LOGIN_PASSWORD_SQL = """
+            SELECT id, first_name, last_name, birthday, login, password, telephone, role
+             FROM pizzeria.users
+             where login = ? and password = ?
             """;
 
     @Override
@@ -115,5 +125,26 @@ public class UserDao
     }
 
     private UserDao() {
+    }
+
+    public Optional<User> findByLoginPassword(String login, String password) {
+        try (var connection = ConnectionManager.get();
+             var statement = connection.prepareStatement(FIND_BY_LOGIN_PASSWORD_SQL)) {
+
+            statement.setString(1, login);
+            statement.setString(2, password);
+
+            ResultSet resultSet = statement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = buildEntity(resultSet);
+            }
+            return Optional.ofNullable(user);
+
+        } catch (DaoException e) {
+            throw e;
+        } catch (Throwable e) {
+            throw new DaoException(e);
+        }
     }
 }

@@ -55,7 +55,7 @@
     <input type="submit" value="Завершить">
 </form>
 
-<p><a href="index.jsp">Войти</a></p>
+<p><a href="${pageContext.request.contextPath}/login">Войти</a></p>
 </body>
 </html>
 

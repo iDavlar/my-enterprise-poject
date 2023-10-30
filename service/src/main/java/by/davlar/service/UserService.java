@@ -6,9 +6,11 @@ import by.davlar.exceptions.ValidationException;
 import by.davlar.jdbc.dao.UserDao;
 import by.davlar.jdbc.entity.User;
 import by.davlar.mapper.CreateUserDtoToUserMapper;
+import by.davlar.mapper.UserToDtoMapper;
 import by.davlar.validator.CreateUserDtoValidator;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -17,6 +19,7 @@ public class UserService {
     private final CreateUserDtoToUserMapper createUserDtoToUserMapper = CreateUserDtoToUserMapper.getInstance();
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserDtoValidator createUserDtoValidator = CreateUserDtoValidator.getInstance();
+    private final UserToDtoMapper userToDtoMapper = UserToDtoMapper.getInstance();
 
     public static UserService getInstance() {
         return INSTANCE;
@@ -27,7 +30,7 @@ public class UserService {
 
     public List<UserDto> findAll() {
         return userDao.findAll().stream()
-                .map(UserDto::from)
+                .map(userToDtoMapper::mapFrom)
                 .collect(Collectors.toList());
     }
 
@@ -39,5 +42,10 @@ public class UserService {
         User user = createUserDtoToUserMapper.mapFrom(createUserDto);
         userDao.save(user);
         return user.getId();
+    }
+
+    public Optional<UserDto> login(String login, String password) {
+        return userDao.findByLoginPassword(login, password)
+                .map(userToDtoMapper::mapFrom);
     }
 }

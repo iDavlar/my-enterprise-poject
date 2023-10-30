@@ -20,19 +20,6 @@ public class UserDto {
     private Integer roleId;
     private RoleDto role;
 
-    public static UserDto from(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .birthday(user.getBirthday().toLocalDate())
-                .login(user.getLogin())
-                .password(user.getPassword())
-                .telephone(user.getTelephone())
-                .roleId(user.getRoleId())
-                .build();
-    }
-
     public User toEntity() {
         return User.builder()
                 .id(this.getId())
