@@ -7,11 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.JspHelper;
+import utils.UrlPath;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/users")
+@WebServlet(UrlPath.ALL_USERS)
 public class AllUsersServlet extends HttpServlet {
 
     private static final UserService userService = UserService.getInstance();
@@ -19,7 +20,6 @@ public class AllUsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         req.setAttribute("usersList", userService.findAll());
         req.getRequestDispatcher(JspHelper.getPath("all_users")).forward(req, resp);

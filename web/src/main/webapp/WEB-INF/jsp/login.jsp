@@ -11,11 +11,11 @@
 <h2>Регистрация</h2>
 <form name="login-form" method="post" action="${pageContext.request.contextPath}/login">
     <label for="login">Логин:</label><br>
-    <input type="text" id="login" name="login" placeholder="Придумайте логин" value="${param.login}" required>
+    <input type="text" id="login" name="login" placeholder="Введите логин" value="${param.login}" required>
     <br>
 
     <label for="password">Пароль:</label><br>
-    <input type="password" id="password" name="password" placeholder="Придумайте пароль" required>
+    <input type="password" id="password" name="password" placeholder="Введите пароль" required>
     <br>
 
     <c:if test="${param.error != null}">

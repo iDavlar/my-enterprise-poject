@@ -6,6 +6,7 @@
     <title>All users</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <c:if test="${not empty requestScope.usersList}">
     <c:forEach var="user" items="${requestScope.usersList}">
         <h3>${user.getFirstName()}</h3>

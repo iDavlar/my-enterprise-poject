@@ -9,10 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import utils.JspHelper;
+import utils.UrlPath;
 
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet(UrlPath.LOGIN)
 public class LoginServlet extends HttpServlet {
     private final UserService userService = UserService.getInstance();
 
@@ -31,13 +32,13 @@ public class LoginServlet extends HttpServlet {
 
     @SneakyThrows
     private void onLoginFail(HttpServletRequest req, HttpServletResponse resp) {
-        resp.sendRedirect("/login?error&login=" + req.getParameter("login"));
+        resp.sendRedirect(UrlPath.LOGIN + "?error&login=" + req.getParameter("login"));
 
     }
 
     @SneakyThrows
     private void onLoginSuccess(UserDto userDto, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", userDto);
-        resp.sendRedirect("/index.jsp");
+        resp.sendRedirect(UrlPath.ALL_USERS);
     }
 }
