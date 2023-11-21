@@ -3,8 +3,7 @@ package by.davlar.service;
 import by.davlar.dto.CreateUserDto;
 import by.davlar.dto.UserDto;
 import by.davlar.exceptions.ValidationException;
-import by.davlar.jdbc.dao.UserDao;
-import by.davlar.jdbc.entity.User;
+import by.davlar.hibernate.dao.UserDao;
 import by.davlar.mapper.CreateUserDtoToUserMapper;
 import by.davlar.mapper.UserToDtoMapper;
 import by.davlar.validator.CreateUserDtoValidator;
@@ -39,8 +38,10 @@ public class UserService {
         if (!validationResult.isValid()) {
             throw new ValidationException(validationResult.getErrors());
         }
-        User user = createUserDtoToUserMapper.mapFrom(createUserDto);
-        userDao.save(user);
+
+        var user = userDao.save(
+                Optional.of(createUserDto).map(createUserDtoToUserMapper::mapFrom).orElseThrow()
+        );
         return user.getId();
     }
 

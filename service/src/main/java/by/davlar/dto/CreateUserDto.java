@@ -1,12 +1,7 @@
 package by.davlar.dto;
 
-import by.davlar.jdbc.entity.User;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
-
-import java.sql.Date;
-import java.time.LocalDate;
 
 @Value
 @Builder

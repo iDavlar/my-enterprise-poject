@@ -1,7 +1,7 @@
 package by.davlar.mapper;
 
 import by.davlar.dto.UserDto;
-import by.davlar.jdbc.entity.User;
+import by.davlar.hibernate.entity.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

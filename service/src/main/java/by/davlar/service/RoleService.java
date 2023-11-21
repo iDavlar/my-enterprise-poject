@@ -1,7 +1,7 @@
 package by.davlar.service;
 
 import by.davlar.dto.RoleDto;
-import by.davlar.jdbc.dao.RoleDao;
+import by.davlar.hibernate.dao.RoleDao;
 import by.davlar.mapper.RoleToDtoMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class RoleService {
 
     public List<RoleDto> findAll() {
         return roleDao.findAll().stream()
-                .map(RoleDto::from)
+                .map(roleToDtoMapper::mapFrom)
                 .collect(Collectors.toList());
     }
 
