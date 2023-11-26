@@ -26,9 +26,26 @@ public class User {
     private String login;
     private String password;
     private String telephone;
-    @Column(name = "role")
-    private Integer roleId;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "role")
     private Role role;
+
+    @PostLoad
+    protected void repair() {
+        if (firstName != null) {
+            firstName = firstName.trim();
+        }
+        if (lastName != null) {
+            lastName = lastName.trim();
+        }
+        if (login != null) {
+            login = login.trim();
+        }
+        if (password != null) {
+            password = password.trim();
+        }
+        if (telephone != null) {
+            telephone = telephone.trim();
+        }
+    }
 }

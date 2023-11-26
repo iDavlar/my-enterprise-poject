@@ -20,7 +20,23 @@ public class Address {
     private String region;
     private String street;
     private String apartment;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @PostLoad
+    protected void repair() {
+        if (city != null) {
+            city = city.trim();
+        }
+        if (region != null) {
+            region = region.trim();
+        }
+        if (street != null) {
+            street = street.trim();
+        }
+        if (apartment != null) {
+            apartment = apartment.trim();
+        }
+    }
 }

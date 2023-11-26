@@ -20,4 +20,11 @@ public class Role {
     private String name;
     @Column(name = "isadmin")
     private Boolean isAdmin;
+
+    @PostLoad
+    protected void repair() {
+        if (name != null) {
+            name = name.trim();
+        }
+    }
 }

@@ -18,4 +18,11 @@ public class Pizza {
     private Integer id;
     private String name;
     private Integer cost;
+
+    @PostLoad
+    protected void repair() {
+        if (name != null) {
+            name = name.trim();
+        }
+    }
 }

@@ -31,7 +31,8 @@ public class RoleService {
                 .map(roleToDtoMapper::mapFrom);
     }
 
-    public Integer getDefaultId() {
-        return roleDao.getDefaultId();
+    public Optional<RoleDto> getDefault() {
+        return roleDao.findById(roleDao.getDefaultId())
+                .map(roleToDtoMapper::mapFrom);
     }
 }

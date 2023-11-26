@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateUserDtoToUserMapper implements Mapper<User, CreateUserDto> {
     private static final CreateUserDtoToUserMapper INSTANCE = new CreateUserDtoToUserMapper();
-
+    private final RoleDtoToRoleMapper roleDtoToRoleMapper = RoleDtoToRoleMapper.getInstance();
     private final RoleService roleService = RoleService.getInstance();
 
     public static CreateUserDtoToUserMapper getInstance() {
@@ -21,9 +21,8 @@ public class CreateUserDtoToUserMapper implements Mapper<User, CreateUserDto> {
     @Override
     public User mapFrom(CreateUserDto createUserDto) {
         var role = roleService.findByName(createUserDto.getRole());
-        Integer roleId = roleService.getDefaultId();
-        if (role.isPresent()) {
-            roleId = role.get().getId();
+        if (role.isEmpty()) {
+            role = roleService.getDefault();
         }
 
         return User.builder()
@@ -33,7 +32,7 @@ public class CreateUserDtoToUserMapper implements Mapper<User, CreateUserDto> {
                 .login(createUserDto.getLogin())
                 .password(createUserDto.getPassword())
                 .telephone(createUserDto.getTelephone())
-                .roleId(roleId)
+                .role(role.map(roleDtoToRoleMapper::mapFrom).get())
                 .build();
     }
 }

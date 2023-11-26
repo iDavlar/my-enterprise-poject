@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class UserToDtoMapper implements Mapper<UserDto, User> {
 
     private static final UserToDtoMapper INSTANCE = new UserToDtoMapper();
+    private final RoleToDtoMapper roleToDtoMapper = RoleToDtoMapper.getInstance();
 
     public static UserToDtoMapper getInstance() {
         return INSTANCE;
@@ -24,7 +25,7 @@ public class UserToDtoMapper implements Mapper<UserDto, User> {
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .telephone(user.getTelephone())
-                .roleId(user.getRoleId())
+                .role(roleToDtoMapper.mapFrom(user.getRole()))
                 .build();
     }
 }

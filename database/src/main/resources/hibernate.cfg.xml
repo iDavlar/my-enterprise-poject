@@ -15,6 +15,8 @@
         <mapping class="by.davlar.hibernate.entity.User"/>
         <mapping class="by.davlar.hibernate.entity.Address"/>
         <mapping class="by.davlar.hibernate.entity.Pizza"/>
+        <mapping class="by.davlar.hibernate.entity.Order"/>
+        <mapping class="by.davlar.hibernate.entity.OrderEntry"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
