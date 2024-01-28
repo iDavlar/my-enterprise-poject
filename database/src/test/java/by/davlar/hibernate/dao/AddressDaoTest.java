@@ -1,35 +1,56 @@
 package by.davlar.hibernate.dao;
 
 import by.davlar.hibernate.entity.Address;
+import by.davlar.hibernate.utils.ConfigurationManager;
+import by.davlar.hibernate.utils.TestDataImporter;
+import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+@TestInstance(PER_CLASS)
 class AddressDaoTest {
+
+    private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
 
     private static final AddressDao dao = AddressDao.getInstance();
     private static final UserDao userDao = UserDao.getInstance();
+
+    @BeforeAll
+    public void initDb() {
+        TestDataImporter.importData(sessionFactory);
+    }
+
+    @AfterAll
+    public void finish() {
+        sessionFactory.close();
+    }
+
     @Test
     public void AddressDaoCRUD_NoFail() {
-        try {
+        try (var session = sessionFactory.openSession()){
             Address entity = Address.builder()
                     .city("test")
                     .region("test")
                     .street("test")
                     .apartment("15")
-                    .user(userDao.findById(1).orElseThrow())
+                    .user(userDao.findById(1, session).orElseThrow())
                     .build();
 
-            dao.save(entity);
+            dao.save(entity, session);
 
-            var foundEntity = dao.findById(entity.getId()).orElseThrow();
+            var foundEntity = dao.findById(entity.getId(), session).orElseThrow();
             assertEquals(entity, foundEntity);
 
             foundEntity.setCity("Test1");
-            dao.update(foundEntity);
+            dao.update(foundEntity, session);
 
-            assertTrue(dao.delete(foundEntity));
+            assertTrue(dao.delete(foundEntity, session));
 
         } catch (NullPointerException e) {
             fail("Something went wrong");

@@ -17,5 +17,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/my-enterprise-project-test</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="my-enterprise-project-test р2" uuid="8b4a36a7-26ad-47c5-a67a-7bade195b4b5">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:mem:my-enterprise-project-test</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

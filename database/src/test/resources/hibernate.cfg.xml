@@ -4,20 +4,18 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/my-enterprise-project-test</property>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.username">postgres</property>
-        <property name="connection.password">admin123qwe!</property>
+        <property name="connection.url">jdbc:h2:mem:my-enterprise-project-test;INIT=CREATE SCHEMA IF NOT EXISTS pizzeria</property>
+        <property name="connection.driver_class">org.h2.Driver</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hibernate.transaction.jta.platform">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <mapping class="by.davlar.hibernate.entity.Role"/>
         <mapping class="by.davlar.hibernate.entity.User"/>
         <mapping class="by.davlar.hibernate.entity.Address"/>
         <mapping class="by.davlar.hibernate.entity.Pizza"/>
         <mapping class="by.davlar.hibernate.entity.Order"/>
         <mapping class="by.davlar.hibernate.entity.OrderEntry"/>
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

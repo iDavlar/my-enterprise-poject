@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,9 @@ public class Role {
     private String name;
     @Column(name = "isadmin")
     private Boolean isAdmin;
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "role")
+    private List<User> users;
 
     @PostLoad
     protected void repair() {
