@@ -1,10 +1,7 @@
 package by.davlar.hibernate.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -22,6 +19,8 @@ public class Role {
     private String name;
     @Column(name = "isadmin")
     private Boolean isAdmin;
+
+    @ToString.Exclude
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role")
     private List<User> users;

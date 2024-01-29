@@ -16,10 +16,12 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String city;
     private String region;
     private String street;
     private String apartment;
+
     @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;

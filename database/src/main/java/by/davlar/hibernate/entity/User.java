@@ -1,12 +1,11 @@
 package by.davlar.hibernate.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +25,15 @@ public class User {
     private String login;
     private String password;
     private String telephone;
+
     @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "role")
     private Role role;
+
+    @ToString.Exclude
+    @Builder.Default
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
 
     @PostLoad
     protected void repair() {
