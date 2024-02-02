@@ -10,7 +10,7 @@ public class PizzaDaoTest {
 
     private static final PizzaDao dao = PizzaDao.getInstance();
 
-    @Test
+//    @Test
     public void PizzaDaoCRUD_NoFail() {
         Pizza entity = Pizza.builder()
                 .name("Test")

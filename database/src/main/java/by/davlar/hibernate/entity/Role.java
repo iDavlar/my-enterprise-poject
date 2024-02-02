@@ -21,7 +21,10 @@ public class Role {
     private Boolean isAdmin;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "role")
     private List<User> users;
 

@@ -5,7 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.FetchProfile;
 
+@FetchProfile(
+        name = "withOrderAndPizza",
+        fetchOverrides = {
+                @FetchProfile.FetchOverride(entity = OrderEntry.class, association = "order", mode = FetchMode.JOIN),
+                @FetchProfile.FetchOverride(entity = OrderEntry.class, association = "pizza", mode = FetchMode.JOIN)
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,11 +27,19 @@ public class OrderEntry {
     private Integer id;
     private Integer amount;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
+    @ManyToOne(
+            cascade = {CascadeType.MERGE},
+            optional = false,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
+    @ManyToOne(
+            cascade = {CascadeType.MERGE},
+            optional = false,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "pizza_id")
     private Pizza pizza;
 }

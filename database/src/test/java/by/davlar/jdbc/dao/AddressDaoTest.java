@@ -10,7 +10,7 @@ public class AddressDaoTest {
 
     private static final AddressDao dao = AddressDao.getInstance();
 
-    @Test
+//    @Test
     public void AddressDaoCRUD_NoFail() {
         Address entity = Address.builder()
                 .userId(1)

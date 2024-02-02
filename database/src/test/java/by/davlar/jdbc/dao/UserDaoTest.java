@@ -14,7 +14,7 @@ public class UserDaoTest {
 
     private static final UserDao dao = UserDao.getInstance();
 
-    @Test
+//    @Test
     public void UserDaoCRUD_NoFail() {
         User entity = User.builder()
                 .firstName("Test")

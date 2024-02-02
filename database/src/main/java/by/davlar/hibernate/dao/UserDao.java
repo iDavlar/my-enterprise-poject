@@ -40,6 +40,8 @@ public class UserDao extends AbstractDao<Integer, User> {
             log.info("Start session {}", session);
             session.beginTransaction();
 
+            session.enableFetchProfile("withRole");
+
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cq = cb.createQuery(getEntityClass());
             Root<User> rootEntry = cq.from(getEntityClass());
@@ -64,9 +66,8 @@ public class UserDao extends AbstractDao<Integer, User> {
 
         return new JPAQuery<Order>(session)
                 .select(order)
-                .from(user)
-                .join(user.orders, order)
-                .where(user.eq(owner))
+                .from(order)
+                .where(order.user.eq(owner))
                 .fetch();
     }
 

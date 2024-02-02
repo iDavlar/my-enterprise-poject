@@ -2,6 +2,7 @@ package by.davlar.hibernate.dao;
 
 import by.davlar.hibernate.entity.Address;
 import by.davlar.hibernate.entity.Order;
+import by.davlar.hibernate.entity.QUser;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static by.davlar.hibernate.entity.QOrder.order;
+import static by.davlar.hibernate.entity.QUser.user;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderDao extends AbstractDao<Integer, Order> {
@@ -28,6 +30,8 @@ public class OrderDao extends AbstractDao<Integer, Order> {
         return new JPAQuery<Order>(session)
                 .select(order)
                 .from(order)
+                .join(order.user, user)
+                .fetchJoin()
                 .where(order.date.between(
                                 LocalDateTime.of(date, beginning),
                                 LocalDateTime.of(date, ending)

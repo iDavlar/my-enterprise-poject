@@ -72,6 +72,8 @@ class UserDaoTest {
     public void findAllOrdersByUser() {
         @Cleanup var session = sessionFactory.openSession();
 
+        session.enableFetchProfile("withRole");
+
         List<Order> users = userDao.findAllOrdersByUser(
                 userDao.findById(1, session).orElseThrow(),
                 session

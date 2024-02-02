@@ -5,7 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.FetchProfile;
 
+@FetchProfile(
+        name = "withUser",
+        fetchOverrides = {
+                @FetchProfile.FetchOverride(entity = Address.class, association = "user", mode = FetchMode.JOIN)
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +30,11 @@ public class Address {
     private String street;
     private String apartment;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
+    @ManyToOne(
+            cascade = {CascadeType.MERGE},
+            optional = false,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "user_id")
     private User user;
 

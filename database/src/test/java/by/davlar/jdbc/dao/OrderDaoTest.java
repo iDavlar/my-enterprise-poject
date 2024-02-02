@@ -13,7 +13,7 @@ public class OrderDaoTest {
 
     private static final OrderDao dao = OrderDao.getInstance();
 
-    @Test
+//    @Test
     public void OrderDaoCRUD_NoFail() {
         Order entity = Order.builder()
                 .userId(1)

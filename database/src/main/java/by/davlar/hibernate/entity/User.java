@@ -2,11 +2,19 @@ package by.davlar.hibernate.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.FetchProfile;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@FetchProfile(
+        name = "withRole",
+        fetchOverrides = {
+                @FetchProfile.FetchOverride(entity = User.class, association = "role", mode = FetchMode.JOIN)
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,13 +34,21 @@ public class User {
     private String password;
     private String telephone;
 
-    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
+    @ManyToOne(
+            cascade = {CascadeType.MERGE},
+            optional = false,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "role")
     private Role role;
 
     @ToString.Exclude
     @Builder.Default
-    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "user")
+    @OneToMany(
+            cascade = {CascadeType.MERGE},
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
     private List<Order> orders = new ArrayList<>();
 
     @PostLoad
