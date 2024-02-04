@@ -1,5 +1,6 @@
 package by.davlar.hibernate.entity;
 
+import by.davlar.hibernate.utils.FetchProfileHelper;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.FetchMode;
@@ -10,8 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_USER_AND_ADDRESS;
+
 @FetchProfile(
-        name = "withUserAndAddress",
+        name = WITH_USER_AND_ADDRESS,
         fetchOverrides = {
                 @FetchProfile.FetchOverride(entity = Order.class, association = "user", mode = FetchMode.JOIN),
                 @FetchProfile.FetchOverride(entity = Order.class, association = "address", mode = FetchMode.JOIN)

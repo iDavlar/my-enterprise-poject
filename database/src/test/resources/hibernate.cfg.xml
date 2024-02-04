@@ -10,7 +10,10 @@
         <property name="format_sql">true</property>
         <property name="hibernate.transaction.jta.platform">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region_prefix.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
+
         <mapping class="by.davlar.hibernate.entity.Role"/>
         <mapping class="by.davlar.hibernate.entity.User"/>
         <mapping class="by.davlar.hibernate.entity.Address"/>

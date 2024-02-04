@@ -4,17 +4,25 @@ import by.davlar.dto.CreateUserDto;
 import by.davlar.dto.UserDto;
 import by.davlar.exceptions.ValidationException;
 import by.davlar.hibernate.dao.UserDao;
+import by.davlar.hibernate.utils.ConfigurationManager;
+import by.davlar.hibernate.utils.FetchProfileHelper;
+import by.davlar.jdbc.utils.ConnectionManager;
 import by.davlar.mapper.CreateUserDtoToUserMapper;
 import by.davlar.mapper.UserToDtoMapper;
 import by.davlar.validator.CreateUserDtoValidator;
+import lombok.Cleanup;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
+
 
 public class UserService {
     private static final UserService INSTANCE = new UserService();
+    private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
     private final CreateUserDtoToUserMapper createUserDtoToUserMapper = CreateUserDtoToUserMapper.getInstance();
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserDtoValidator createUserDtoValidator = CreateUserDtoValidator.getInstance();
@@ -28,7 +36,9 @@ public class UserService {
     }
 
     public List<UserDto> findAll() {
-        return userDao.findAll().stream()
+        @Cleanup var session = sessionFactory.openSession();
+        session.enableFetchProfile(WITH_ROLE);
+        return userDao.findAll(session).stream()
                 .map(userToDtoMapper::mapFrom)
                 .collect(Collectors.toList());
     }

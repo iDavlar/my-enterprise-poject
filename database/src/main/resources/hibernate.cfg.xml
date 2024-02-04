@@ -11,6 +11,10 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hibernate.transaction.jta.platform">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region_prefix.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
+
         <mapping class="by.davlar.hibernate.entity.Role"/>
         <mapping class="by.davlar.hibernate.entity.User"/>
         <mapping class="by.davlar.hibernate.entity.Address"/>
@@ -18,6 +22,6 @@
         <mapping class="by.davlar.hibernate.entity.Order"/>
         <mapping class="by.davlar.hibernate.entity.OrderEntry"/>
         <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+<!--        <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

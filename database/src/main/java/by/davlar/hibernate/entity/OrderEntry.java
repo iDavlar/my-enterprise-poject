@@ -1,5 +1,6 @@
 package by.davlar.hibernate.entity;
 
+import by.davlar.hibernate.utils.FetchProfileHelper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +9,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.FetchProfile;
 
+import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ORDER_AND_PIZZA;
+
 @FetchProfile(
-        name = "withOrderAndPizza",
+        name = WITH_ORDER_AND_PIZZA,
         fetchOverrides = {
                 @FetchProfile.FetchOverride(entity = OrderEntry.class, association = "order", mode = FetchMode.JOIN),
                 @FetchProfile.FetchOverride(entity = OrderEntry.class, association = "pizza", mode = FetchMode.JOIN)

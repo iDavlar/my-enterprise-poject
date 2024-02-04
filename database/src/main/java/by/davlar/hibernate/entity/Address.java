@@ -1,5 +1,6 @@
 package by.davlar.hibernate.entity;
 
+import by.davlar.hibernate.utils.FetchProfileHelper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +9,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.FetchProfile;
 
+import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_USER;
+
 @FetchProfile(
-        name = "withUser",
+        name = WITH_USER,
         fetchOverrides = {
                 @FetchProfile.FetchOverride(entity = Address.class, association = "user", mode = FetchMode.JOIN)
         }

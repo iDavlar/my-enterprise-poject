@@ -2,6 +2,8 @@ package by.davlar.hibernate.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "roles", schema = "pizzeria")
+@Audited
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

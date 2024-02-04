@@ -3,6 +3,7 @@ package by.davlar.hibernate.dao;
 import by.davlar.hibernate.entity.Order;
 import by.davlar.hibernate.entity.User;
 import by.davlar.hibernate.utils.ConfigurationManager;
+import by.davlar.hibernate.utils.FetchProfileHelper;
 import by.davlar.hibernate.utils.TestDataImporter;
 import com.querydsl.core.Tuple;
 import lombok.Cleanup;
@@ -107,6 +108,21 @@ class UserDaoTest {
                 .toList();
         assertThat(sums).containsExactlyInAnyOrder(2215, 6015, 1450, 1000, 2000);
 
+    }
+
+    @Test
+    public void secondLevelCache() {
+        @Cleanup var session1 = sessionFactory.openSession();
+        @Cleanup var session2 = sessionFactory.openSession();
+
+        session1.enableFetchProfile(FetchProfileHelper.WITH_ROLE);
+//        session2.enableFetchProfile(FetchProfileHelper.WITH_ROLE);
+
+        var user1 = userDao.findById(1, session1);
+        var user2 = userDao.findById(1, session2);
+
+        System.out.println(user1.hashCode());
+        System.out.println(user2.hashCode());
     }
 
 }

@@ -1,16 +1,22 @@
 package by.davlar.hibernate.entity;
 
+import by.davlar.hibernate.utils.FetchProfileHelper;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.FetchProfile;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
+
 @FetchProfile(
-        name = "withRole",
+        name = WITH_ROLE,
         fetchOverrides = {
                 @FetchProfile.FetchOverride(entity = User.class, association = "role", mode = FetchMode.JOIN)
         }
@@ -21,6 +27,8 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users", schema = "pizzeria")
+@Audited
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +57,18 @@ public class User {
             mappedBy = "user",
             fetch = FetchType.LAZY
     )
+    @NotAudited
     private List<Order> orders = new ArrayList<>();
+
+    @ToString.Exclude
+    @Builder.Default
+    @OneToMany(
+            cascade = {CascadeType.MERGE},
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    @NotAudited
+    private List<Address> addresses = new ArrayList<>();
 
     @PostLoad
     protected void repair() {
