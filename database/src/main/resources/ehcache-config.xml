@@ -5,6 +5,8 @@
 
     <ehcache:cache allias="Users" uses-template="simple"/>
     <ehcache:cache allias="Roles" uses-template="simple"/>
+    <ehcache:cache allias="Addresses" uses-template="simple"/>
+    <ehcache:cache allias="Pizzas" uses-template="simple"/>
 
     <ehcache:cache-template name="simple">
         <ehcache:expiry>
