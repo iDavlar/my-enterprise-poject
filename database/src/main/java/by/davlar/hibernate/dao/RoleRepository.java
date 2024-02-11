@@ -1,38 +1,26 @@
 package by.davlar.hibernate.dao;
 
-import by.davlar.hibernate.entity.Order;
-import by.davlar.hibernate.entity.QOrder;
 import by.davlar.hibernate.entity.Role;
-import by.davlar.hibernate.entity.User;
 import by.davlar.hibernate.utils.ConfigurationManager;
-import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 
-import static by.davlar.hibernate.entity.QOrder.order;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RoleDao extends AbstractDao<Integer, Role> {
-    private static final RoleDao INSTANCE = new RoleDao();
+public class RoleRepository extends BaseRepository<Integer, Role> {
+    private static final RoleRepository INSTANCE = new RoleRepository();
     private static final Integer DEFAULT_ID = 2;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public static RoleDao getInstance() {
+    public static RoleRepository getInstance() {
         return INSTANCE;
     }
 

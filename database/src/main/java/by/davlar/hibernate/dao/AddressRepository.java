@@ -5,10 +5,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AddressDao extends AbstractDao<Integer, Address> {
-    private static final AddressDao INSTANCE = new AddressDao();
+public class AddressRepository extends BaseRepository<Integer, Address> {
+    private static final AddressRepository INSTANCE = new AddressRepository();
 
-    public static AddressDao getInstance() {
+    public static AddressRepository getInstance() {
         return INSTANCE;
     }
 }

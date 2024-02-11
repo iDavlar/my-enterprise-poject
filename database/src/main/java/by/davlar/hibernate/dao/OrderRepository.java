@@ -1,8 +1,6 @@
 package by.davlar.hibernate.dao;
 
-import by.davlar.hibernate.entity.Address;
 import by.davlar.hibernate.entity.Order;
-import by.davlar.hibernate.entity.QUser;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,10 +15,10 @@ import static by.davlar.hibernate.entity.QOrder.order;
 import static by.davlar.hibernate.entity.QUser.user;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class OrderDao extends AbstractDao<Integer, Order> {
-    private static final OrderDao INSTANCE = new OrderDao();
+public class OrderRepository extends BaseRepository<Integer, Order> {
+    private static final OrderRepository INSTANCE = new OrderRepository();
 
-    public static OrderDao getInstance() {
+    public static OrderRepository getInstance() {
         return INSTANCE;
     }
 

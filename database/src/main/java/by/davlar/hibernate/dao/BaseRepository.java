@@ -1,12 +1,12 @@
 package by.davlar.hibernate.dao;
 
+import by.davlar.hibernate.entity.BaseEntity;
 import by.davlar.hibernate.utils.ConfigurationManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +15,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDao<K extends Serializable, E>
-        implements Dao<K, E>, ConnectableDao<K, E> {
+public abstract class BaseRepository<K extends Serializable, E extends BaseEntity<K>>
+        implements Repository<K, E>, ConnectableRepository<K, E> {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private Class<E> entityClass;
@@ -47,6 +47,15 @@ public abstract class AbstractDao<K extends Serializable, E>
         try (var sessionFactory = ConfigurationManager.getSessionFactory();
              var session = sessionFactory.openSession()) {
             return delete(entity, session);
+        }
+    }
+
+    @Override
+    public boolean delete(K id) {
+        try (var sessionFactory = ConfigurationManager.getSessionFactory();
+             var session = sessionFactory.openSession()) {
+
+            return delete(findById(id, session).orElseThrow(), session);
         }
     }
 

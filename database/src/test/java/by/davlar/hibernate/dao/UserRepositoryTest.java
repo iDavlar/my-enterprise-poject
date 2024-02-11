@@ -15,19 +15,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
-class UserDaoTest {
+class UserRepositoryTest {
 
     private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
 
-    private static final UserDao userDao = UserDao.getInstance();
-    private static final RoleDao roleDao = RoleDao.getInstance();
+    private static final UserRepository userDao = UserRepository.getInstance();
+    private static final RoleRepository roleDao = RoleRepository.getInstance();
 
     @BeforeAll
     public void initDb() {

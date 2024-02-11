@@ -15,10 +15,10 @@ import java.util.List;
 @Table(name = "roles", schema = "pizzeria")
 @Audited
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Roles")
-public class Role {
+public class Role implements BaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "isadmin")

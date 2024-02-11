@@ -6,22 +6,20 @@ import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
 @UtilityClass
 public class TestDataImporter {
 
-    private final RoleDao ROLE_DAO = RoleDao.getInstance();
-    private final UserDao USER_DAO = UserDao.getInstance();
-    private final AddressDao ADDRESS_DAO = AddressDao.getInstance();
-    private final PizzaDao PIZZA_DAO = PizzaDao.getInstance();
-    private final OrderDao ORDER_DAO = OrderDao.getInstance();
-    private final OrderEntryDao ORDER_ENTRY_DAO = OrderEntryDao.getInstance();
+    private final RoleRepository ROLE_DAO = RoleRepository.getInstance();
+    private final UserRepository USER_DAO = UserRepository.getInstance();
+    private final AddressRepository ADDRESS_DAO = AddressRepository.getInstance();
+    private final PizzaRepository PIZZA_DAO = PizzaRepository.getInstance();
+    private final OrderRepository ORDER_DAO = OrderRepository.getInstance();
+    private final OrderEntryRepository ORDER_ENTRY_DAO = OrderEntryRepository.getInstance();
 
     public void importData(SessionFactory sessionFactory) {
 

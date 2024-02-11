@@ -1,6 +1,6 @@
 package by.davlar.hibernate.dao;
 
-import by.davlar.hibernate.entity.OrderEntry;
+import by.davlar.hibernate.entity.Pizza;
 import by.davlar.hibernate.utils.ConfigurationManager;
 import by.davlar.hibernate.utils.TestDataImporter;
 import org.hibernate.SessionFactory;
@@ -13,13 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
-class OrderEntryDaoTest {
+class PizzaRepositoryTest {
 
     private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
 
-    private static final OrderEntryDao orderEntryDao = OrderEntryDao.getInstance();
-    private static final OrderDao orderDao = OrderDao.getInstance();
-    private static final PizzaDao pizzaDao = PizzaDao.getInstance();
+    private static final PizzaRepository dao = PizzaRepository.getInstance();
 
     @BeforeAll
     public void initDb() {
@@ -32,23 +30,23 @@ class OrderEntryDaoTest {
     }
 
     @Test
-    public void OrderEntryDaoCRUD_NoFail() {
-        try  (var session = sessionFactory.openSession()){
-            OrderEntry entity = OrderEntry.builder()
-                    .order(orderDao.findById(1, session).orElseThrow())
-                    .pizza(pizzaDao.findById(2, session).orElseThrow())
-                    .amount(15)
-                    .build();
+    public void PizzaDaoCRUD_NoFail() {
 
-            orderEntryDao.save(entity, session);
+        Pizza entity = Pizza.builder()
+                .name("Test")
+                .cost(123)
+                .build();
 
-            var foundEntity = orderEntryDao.findById(entity.getId(), session).orElseThrow();
+        try (var session = sessionFactory.openSession()){
+            dao.save(entity, session);
+
+            var foundEntity = dao.findById(entity.getId(), session).orElseThrow();
             assertEquals(entity, foundEntity);
 
-            foundEntity.setAmount(20);
-            orderEntryDao.update(foundEntity, session);
+            foundEntity.setName("Test1");
+            dao.update(foundEntity, session);
 
-            assertTrue(orderEntryDao.delete(foundEntity, session));
+            assertTrue(dao.delete(foundEntity, session));
 
         } catch (NullPointerException e) {
             fail("Something went wrong");
@@ -56,5 +54,4 @@ class OrderEntryDaoTest {
             fail("Connection error: " + e.getMessage());
         }
     }
-
 }

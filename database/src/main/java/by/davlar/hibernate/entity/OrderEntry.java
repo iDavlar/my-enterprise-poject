@@ -24,7 +24,7 @@ import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ORDER_AND_PIZZA;
 @Builder
 @Entity
 @Table(name = "order_entries", schema = "pizzeria")
-public class OrderEntry {
+public class OrderEntry implements BaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

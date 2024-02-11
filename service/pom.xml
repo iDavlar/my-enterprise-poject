@@ -45,5 +45,9 @@
             <groupId>by.davlar</groupId>
             <artifactId>database</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
     </dependencies>
 </project>

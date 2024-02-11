@@ -1,6 +1,6 @@
 package by.davlar.hibernate.dao;
 
-import by.davlar.hibernate.entity.Address;
+import by.davlar.hibernate.entity.OrderEntry;
 import by.davlar.hibernate.utils.ConfigurationManager;
 import by.davlar.hibernate.utils.TestDataImporter;
 import org.hibernate.SessionFactory;
@@ -10,16 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
-class AddressDaoTest {
+class OrderEntryRepositoryTest {
 
     private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
 
-    private static final AddressDao dao = AddressDao.getInstance();
-    private static final UserDao userDao = UserDao.getInstance();
+    private static final OrderEntryRepository orderEntryDao = OrderEntryRepository.getInstance();
+    private static final OrderRepository orderDao = OrderRepository.getInstance();
+    private static final PizzaRepository pizzaDao = PizzaRepository.getInstance();
 
     @BeforeAll
     public void initDb() {
@@ -32,25 +32,23 @@ class AddressDaoTest {
     }
 
     @Test
-    public void AddressDaoCRUD_NoFail() {
-        try (var session = sessionFactory.openSession()){
-            Address entity = Address.builder()
-                    .city("test")
-                    .region("test")
-                    .street("test")
-                    .apartment("15")
-                    .user(userDao.findById(1, session).orElseThrow())
+    public void OrderEntryDaoCRUD_NoFail() {
+        try  (var session = sessionFactory.openSession()){
+            OrderEntry entity = OrderEntry.builder()
+                    .order(orderDao.findById(1, session).orElseThrow())
+                    .pizza(pizzaDao.findById(2, session).orElseThrow())
+                    .amount(15)
                     .build();
 
-            dao.save(entity, session);
+            orderEntryDao.save(entity, session);
 
-            var foundEntity = dao.findById(entity.getId(), session).orElseThrow();
+            var foundEntity = orderEntryDao.findById(entity.getId(), session).orElseThrow();
             assertEquals(entity, foundEntity);
 
-            foundEntity.setCity("Test1");
-            dao.update(foundEntity, session);
+            foundEntity.setAmount(20);
+            orderEntryDao.update(foundEntity, session);
 
-            assertTrue(dao.delete(foundEntity, session));
+            assertTrue(orderEntryDao.delete(foundEntity, session));
 
         } catch (NullPointerException e) {
             fail("Something went wrong");
@@ -58,4 +56,5 @@ class AddressDaoTest {
             fail("Connection error: " + e.getMessage());
         }
     }
+
 }

@@ -29,10 +29,10 @@ import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
 @Table(name = "users", schema = "pizzeria")
 @Audited
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Users")
-public class User {
+public class User implements BaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

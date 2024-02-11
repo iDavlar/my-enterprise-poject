@@ -2,7 +2,6 @@ package by.davlar.hibernate.dao;
 
 import by.davlar.hibernate.entity.*;
 import by.davlar.hibernate.utils.ConfigurationManager;
-import by.davlar.hibernate.utils.FetchProfileHelper;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.TypedQuery;
@@ -26,11 +25,11 @@ import static by.davlar.hibernate.entity.QUser.user;
 import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserDao extends AbstractDao<Integer, User> {
-    private static final UserDao INSTANCE = new UserDao();
+public class UserRepository extends BaseRepository<Integer, User> {
+    private static final UserRepository INSTANCE = new UserRepository();
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public static UserDao getInstance() {
+    public static UserRepository getInstance() {
         return INSTANCE;
     }
 

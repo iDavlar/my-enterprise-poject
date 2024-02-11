@@ -4,7 +4,6 @@ import by.davlar.hibernate.entity.Order;
 import by.davlar.hibernate.utils.ConfigurationManager;
 import by.davlar.hibernate.utils.TestDataImporter;
 import lombok.Cleanup;
-import org.assertj.core.api.Assertions;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
-class OrderDaoTest {
+class OrderRepositoryTest {
 
     private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
 
-    private static final OrderDao orderDao = OrderDao.getInstance();
-    private static final UserDao userDao = UserDao.getInstance();
-    private static final AddressDao addressDao = AddressDao.getInstance();
+    private static final OrderRepository orderDao = OrderRepository.getInstance();
+    private static final UserRepository userDao = UserRepository.getInstance();
+    private static final AddressRepository addressDao = AddressRepository.getInstance();
 
     @BeforeAll
     public void initDb() {

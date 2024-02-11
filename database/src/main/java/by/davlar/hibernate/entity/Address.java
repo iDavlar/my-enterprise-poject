@@ -1,6 +1,5 @@
 package by.davlar.hibernate.entity;
 
-import by.davlar.hibernate.utils.FetchProfileHelper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +24,7 @@ import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_USER;
 @Entity
 @Table(name = "address", schema = "pizzeria")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Addresses")
-public class Address {
+public class Address implements BaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
