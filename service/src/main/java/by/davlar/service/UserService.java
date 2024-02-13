@@ -5,8 +5,7 @@ import by.davlar.dto.UserDto;
 import by.davlar.exceptions.ValidationException;
 import by.davlar.hibernate.dao.UserRepository;
 import by.davlar.hibernate.utils.ConfigurationManager;
-import by.davlar.mapper.CreateUserDtoToUserMapper;
-import by.davlar.mapper.UserToDtoMapper;
+import by.davlar.mapper.UserMapper;
 import by.davlar.validator.CreateUserDtoValidator;
 import lombok.Cleanup;
 import org.hibernate.SessionFactory;
@@ -21,10 +20,9 @@ import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
 public class UserService {
     private static final UserService INSTANCE = new UserService();
     private final SessionFactory sessionFactory = ConfigurationManager.getSessionFactory();
-    private final CreateUserDtoToUserMapper createUserDtoToUserMapper = CreateUserDtoToUserMapper.getInstance();
+    private final UserMapper userMapper = UserMapper.INSTANCE;
     private final UserRepository userDao = UserRepository.getInstance();
     private final CreateUserDtoValidator createUserDtoValidator = CreateUserDtoValidator.getInstance();
-    private final UserToDtoMapper userToDtoMapper = UserToDtoMapper.getInstance();
 
     public static UserService getInstance() {
         return INSTANCE;
@@ -37,7 +35,7 @@ public class UserService {
         @Cleanup var session = sessionFactory.openSession();
         session.enableFetchProfile(WITH_ROLE);
         return userDao.findAll(session).stream()
-                .map(userToDtoMapper::mapFrom)
+                .map(userMapper::UserToDtoMapper)
                 .collect(Collectors.toList());
     }
 
@@ -48,13 +46,13 @@ public class UserService {
         }
 
         var user = userDao.save(
-                Optional.of(createUserDto).map(createUserDtoToUserMapper::mapFrom).orElseThrow()
+                Optional.of(createUserDto).map(userMapper::CreateUserDtoToUserMapper).orElseThrow()
         );
         return user.getId();
     }
 
     public Optional<UserDto> login(String login, String password) {
         return userDao.findByLoginPassword(login, password)
-                .map(userToDtoMapper::mapFrom);
+                .map(userMapper::UserToDtoMapper);
     }
 }
