@@ -35,9 +35,9 @@ public class UserRepository extends BaseRepository<Integer, User> {
 
     public Optional<User> findByLoginPassword(String login, String password) {
         log.debug("Start findByLoginPassword method with login = {} and password = {}", login, password);
-        Configuration configuration = ConfigurationManager.getConfiguration();
-        try (var sessionFactory = configuration.buildSessionFactory();
-             var session = sessionFactory.openSession()) {
+
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        try (var session = sessionFactory.openSession()) {
             log.info("Start session {}", session);
             session.beginTransaction();
 
@@ -63,7 +63,7 @@ public class UserRepository extends BaseRepository<Integer, User> {
         }
     }
 
-    public List<Order> findAllOrdersByUser (User owner, Session session) {
+    public List<Order> findAllOrdersByUser(User owner, Session session) {
 
         return new JPAQuery<Order>(session)
                 .select(order)
@@ -72,7 +72,7 @@ public class UserRepository extends BaseRepository<Integer, User> {
                 .fetch();
     }
 
-    public List<Tuple> findOrdersSumPerUser (Session session) {
+    public List<Tuple> findOrdersSumPerUser(Session session) {
 
         return new JPAQuery<Tuple>(session)
                 .select(user, orderEntry.amount.multiply(pizza.cost).sum())

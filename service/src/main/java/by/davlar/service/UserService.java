@@ -7,11 +7,13 @@ import by.davlar.hibernate.dao.UserRepository;
 import by.davlar.hibernate.utils.ConfigurationManager;
 import by.davlar.mapper.UserMapper;
 import by.davlar.validator.CreateUserDtoValidator;
+import jakarta.validation.*;
 import lombok.Cleanup;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static by.davlar.hibernate.utils.FetchProfileHelper.WITH_ROLE;
@@ -40,10 +42,16 @@ public class UserService {
     }
 
     public Integer create(CreateUserDto createUserDto) {
-        var validationResult = createUserDtoValidator.isValid(createUserDto);
-        if (!validationResult.isValid()) {
-            throw new ValidationException(validationResult.getErrors());
+        @Cleanup var validatorFactory = Validation.buildDefaultValidatorFactory();
+        var validator = validatorFactory.getValidator();
+        var validationResult = validator.validate(createUserDto);
+        if (!validationResult.isEmpty()) {
+            throw new ConstraintViolationException(validationResult);
         }
+//        var validationResult = createUserDtoValidator.isValid(createUserDto);
+//        if (!validationResult.isValid()) {
+//            throw new ValidationException(validationResult.getErrors());
+//        }
 
         var user = userDao.save(
                 Optional.of(createUserDto).map(userMapper::CreateUserDtoToUserMapper).orElseThrow()

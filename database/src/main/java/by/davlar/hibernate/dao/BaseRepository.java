@@ -6,6 +6,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import lombok.Cleanup;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,52 +36,51 @@ public abstract class BaseRepository<K extends Serializable, E extends BaseEntit
 
     @Override
     public E save(E entity) {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
-            save(entity, session);
-        }
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
+        save(entity, session);
+
         return entity;
     }
 
     @Override
     public boolean delete(E entity) {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
-            return delete(entity, session);
-        }
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
+
+        return delete(entity, session);
     }
 
     @Override
     public boolean delete(K id) {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
 
-            return delete(findById(id, session).orElseThrow(), session);
-        }
+        return delete(findById(id, session).orElseThrow(), session);
     }
 
     @Override
     public List<E> findAll() {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
-            return findAll(session);
-        }
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
+
+        return findAll(session);
     }
 
     @Override
     public Optional<E> findById(K id) {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
-            return findById(id, session);
-        }
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
+
+        return findById(id, session);
     }
 
     @Override
     public E update(E entity) {
-        try (var sessionFactory = ConfigurationManager.getSessionFactory();
-             var session = sessionFactory.openSession()) {
-            return update(entity, session);
-        }
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        @Cleanup var session = sessionFactory.openSession();
+
+        return update(entity, session);
     }
 
     @Override

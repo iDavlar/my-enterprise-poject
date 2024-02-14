@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.JspHelper;
@@ -56,6 +57,15 @@ public class RegistrationServlet extends HttpServlet {
         } catch (ValidationException e) {
             log.warn("Session {} failed to sign in as {} with errors {}", req.getSession(), userDto, e.getErrors());
             req.setAttribute("errors", e.getErrors());
+            doGet(req, resp);
+        } catch (ConstraintViolationException e) {
+            log.warn(
+                    "Session {} failed to sign in as {} with errors {}",
+                    req.getSession(),
+                    userDto,
+                    e.getConstraintViolations()
+            );
+            req.setAttribute("errors", e.getConstraintViolations());
             doGet(req, resp);
         }
     }

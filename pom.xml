@@ -136,6 +136,21 @@
                 <version>${version.hibernate}</version>
             </dependency>
             <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>8.0.1.Final</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>javax.el</groupId>-->
+<!--                <artifactId>javax.el-api</artifactId>-->
+<!--                <version>3.0.0</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.glassfish</groupId>-->
+<!--                <artifactId>javax.el</artifactId>-->
+<!--                <version>3.0.0</version>-->
+<!--            </dependency>-->
+            <dependency>
                 <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>3.10.8</version>
@@ -161,6 +176,7 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${version.slf4j}</version>
             </dependency>
+
 
             <!-- Test -->
             <dependency>

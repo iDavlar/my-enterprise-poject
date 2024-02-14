@@ -1,10 +1,8 @@
 package by.davlar.mapper;
 
 import by.davlar.dto.CreateUserDto;
-import by.davlar.dto.RoleDto;
 import by.davlar.dto.UserDto;
 import by.davlar.hibernate.entity.User;
-import by.davlar.service.RoleService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

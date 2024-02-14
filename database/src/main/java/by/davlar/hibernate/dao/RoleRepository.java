@@ -30,9 +30,8 @@ public class RoleRepository extends BaseRepository<Integer, Role> {
 
     public Optional<Role> findByName(String name) {
         log.debug("Start findByName method with name = {}", name);
-        Configuration configuration = ConfigurationManager.getConfiguration();
-        try (var sessionFactory = configuration.buildSessionFactory();
-             var session = sessionFactory.openSession()) {
+        var sessionFactory = ConfigurationManager.getSessionFactory();
+        try (var session = sessionFactory.openSession()) {
             log.info("Start session {}", session);
             session.beginTransaction();
 
