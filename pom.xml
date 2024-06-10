@@ -13,6 +13,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
+        <relativePath/>
     </parent>
 
     <modules>
@@ -68,11 +69,11 @@
                 <version>${version.querydsl}</version>
                 <classifier>jakarta</classifier>
             </dependency>
-            <dependency>
-                <groupId>jakarta.persistence</groupId>
-                <artifactId>jakarta.persistence-api</artifactId>
-                <version>${jakarta.persistence.persistence-api.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>jakarta.persistence</groupId>-->
+<!--                <artifactId>jakarta.persistence-api</artifactId>-->
+<!--                <version>${jakarta.persistence.persistence-api.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
@@ -148,8 +149,9 @@
                 <version>8.0.1.Final</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-dbcp</artifactId>
+                <version>9.0.80</version>
             </dependency>
 <!--            <dependency>-->
 <!--                <groupId>javax.el</groupId>-->
@@ -190,11 +192,6 @@
 
 
             <!-- Test -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
