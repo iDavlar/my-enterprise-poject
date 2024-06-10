@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RoleService {
-    private final SessionFactory sessionFactory;
     private final RoleRepository roleDao;
     private final RoleMapper roleMapper = RoleMapper.INSTANCE;
 
