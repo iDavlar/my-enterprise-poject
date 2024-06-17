@@ -8,10 +8,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper(
-        unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,
-        componentModel = "spring"
+        componentModel = "spring",
+        unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE
 )
 public abstract class RoleMapper {
 
@@ -29,6 +31,6 @@ public abstract class RoleMapper {
         if (roleDto.isEmpty()) {
             roleDto = roleService.getDefault();
         }
-        return roleDto.map(INSTANCE::RoleDtoToRole).get();
+        return roleDto.map(this::RoleDtoToRole).get();
     }
 }

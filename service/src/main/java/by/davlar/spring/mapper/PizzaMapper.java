@@ -5,12 +5,14 @@ import by.davlar.spring.dto.PizzaDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
-public interface PizzaMapper {
+@Mapper(
+        componentModel = "spring"
+)
+public abstract class PizzaMapper {
 
-    PizzaMapper INSTANCE = Mappers.getMapper(PizzaMapper.class);
+//    PizzaMapper INSTANCE = Mappers.getMapper(PizzaMapper.class);
 
-    Pizza PizzaDtoToPizza(PizzaDto pizzaDto);
+    public abstract Pizza PizzaDtoToPizza(PizzaDto pizzaDto);
 
-    PizzaDto PizzaToPizzaDto(Pizza pizza);
+    public abstract PizzaDto PizzaToPizzaDto(Pizza pizza);
 }
