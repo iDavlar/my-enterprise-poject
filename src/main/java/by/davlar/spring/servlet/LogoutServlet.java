@@ -1,6 +1,6 @@
 package by.davlar.spring.servlet;
 
-import by.davlar.spring.utils.UrlPath;
+import by.davlar.spring.http.utils.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

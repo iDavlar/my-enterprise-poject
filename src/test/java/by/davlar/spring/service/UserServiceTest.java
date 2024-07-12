@@ -1,8 +1,8 @@
 package by.davlar.spring.service;
 
 import by.davlar.spring.annotation.IT;
-import by.davlar.spring.dto.CreateUserDto;
-import by.davlar.spring.dto.UserDto;
+import by.davlar.spring.dto.UserCreateEditDto;
+import by.davlar.spring.dto.UserReadDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,14 +20,14 @@ class UserServiceTest {
 
     @Test
     void findAll_NotEmptyAndNoThrow() {
-        List<UserDto> users = userService.findAll();
+        List<UserReadDto> users = userService.findAll();
 
         assertFalse(users.isEmpty());
     }
 
     @Test
     void create_newUser_isPresentAndNoThrow() {
-        CreateUserDto userDto = CreateUserDto.builder()
+        UserCreateEditDto userDto = UserCreateEditDto.builder()
                 .firstName("Test123")
                 .lastName("Test123")
                 .birthday("1999-04-28")
@@ -36,7 +36,7 @@ class UserServiceTest {
                 .role("USER")
                 .build();
 
-        Optional<UserDto> user = userService.create(userDto);
+        Optional<UserReadDto> user = userService.create(userDto);
 
         assertTrue(user.isPresent());
     }
@@ -44,7 +44,7 @@ class UserServiceTest {
     void login_isPresent() {
         String login = "Davlar";
         String password = "123456";
-        Optional<UserDto> user = userService.login(login, password);
+        Optional<UserReadDto> user = userService.login(login, password);
 
         assertTrue(user.isPresent());
     }

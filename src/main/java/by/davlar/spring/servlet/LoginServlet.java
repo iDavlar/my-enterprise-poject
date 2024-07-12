@@ -1,9 +1,9 @@
 package by.davlar.spring.servlet;
 
-import by.davlar.spring.dto.UserDto;
+import by.davlar.spring.dto.UserReadDto;
 import by.davlar.spring.service.UserService;
-import by.davlar.spring.utils.JspHelper;
-import by.davlar.spring.utils.UrlPath;
+import by.davlar.spring.http.utils.JspHelper;
+import by.davlar.spring.http.utils.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         log.trace("Session {} tried login ({}, {})", req.getSession(), login, password);
 
         userService.login(login, password)
-                .ifPresentOrElse(userDto -> onLoginSuccess(userDto, req, resp),
+                .ifPresentOrElse(userReadDto -> onLoginSuccess(userReadDto, req, resp),
                         () -> onLoginFail(req, resp));
     }
 
@@ -48,9 +48,9 @@ public class LoginServlet extends HttpServlet {
     }
 
     @SneakyThrows
-    private void onLoginSuccess(UserDto userDto, HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession().setAttribute("user", userDto);
+    private void onLoginSuccess(UserReadDto userReadDto, HttpServletRequest req, HttpServletResponse resp) {
+        req.getSession().setAttribute("user", userReadDto);
         resp.sendRedirect(UrlPath.ALL_USERS);
-        log.trace("Session {} was authorized as {}", req.getSession(), userDto);
+        log.trace("Session {} was authorized as {}", req.getSession(), userReadDto);
     }
 }

@@ -8,7 +8,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CreateUserDto {
+public class UserCreateEditDto {
 
     private static final String NAME_MASK = "^[A-Za-zА-Яа-я]+$";
 
@@ -41,4 +41,16 @@ public class CreateUserDto {
     @NotNull
     @NotEmpty
     String role;
+
+    public static UserCreateEditDto newEmptyObject() {
+        return UserCreateEditDto.builder()
+                .firstName(null)
+                .lastName(null)
+                .login(null)
+                .password(null)
+                .birthday(null)
+                .telephone(null)
+                .role(null)
+                .build();
+    }
 }

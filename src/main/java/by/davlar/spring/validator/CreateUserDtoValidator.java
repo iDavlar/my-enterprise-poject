@@ -1,11 +1,11 @@
 package by.davlar.spring.validator;
 
-import by.davlar.spring.dto.CreateUserDto;
+import by.davlar.spring.dto.UserCreateEditDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateUserDtoValidator implements Validator<CreateUserDto> {
+public class CreateUserDtoValidator implements Validator<UserCreateEditDto> {
     private static final CreateUserDtoValidator INSTANCE = new CreateUserDtoValidator();
 
     private static final String NAME_MASK = "^[A-Za-zА-Яа-я]+$";
@@ -20,7 +20,7 @@ public class CreateUserDtoValidator implements Validator<CreateUserDto> {
         return INSTANCE;
     }
 
-    public ValidationResult isValid(CreateUserDto userDto) {
+    public ValidationResult isValid(UserCreateEditDto userDto) {
         var validationResult = new ValidationResult();
 
         validateName(userDto, validationResult);
@@ -30,7 +30,7 @@ public class CreateUserDtoValidator implements Validator<CreateUserDto> {
         return validationResult;
     }
 
-    public void validateName(CreateUserDto userDto, ValidationResult validationResult) {
+    public void validateName(UserCreateEditDto userDto, ValidationResult validationResult) {
         boolean isValid = true;
         String error = "";
         String value = userDto.getFirstName();
@@ -49,7 +49,7 @@ public class CreateUserDtoValidator implements Validator<CreateUserDto> {
         }
     }
 
-    public void validateLogin(CreateUserDto userDto, ValidationResult validationResult) {
+    public void validateLogin(UserCreateEditDto userDto, ValidationResult validationResult) {
         boolean isValid = true;
         String error = "";
         String value = userDto.getLogin();
@@ -71,7 +71,7 @@ public class CreateUserDtoValidator implements Validator<CreateUserDto> {
         }
     }
 
-    public void validatePassword(CreateUserDto userDto, ValidationResult validationResult) {
+    public void validatePassword(UserCreateEditDto userDto, ValidationResult validationResult) {
         boolean isValid = true;
         String error = "";
         String value = userDto.getPassword();

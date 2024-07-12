@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
-import static by.davlar.spring.utils.UrlPath.LOGIN;
-import static by.davlar.spring.utils.UrlPath.REGISTRATION;
+import static by.davlar.spring.http.utils.UrlPath.LOGIN;
+import static by.davlar.spring.http.utils.UrlPath.REGISTRATION;
 
 @WebFilter("/*")
 public class AuthorizationFilter implements Filter {

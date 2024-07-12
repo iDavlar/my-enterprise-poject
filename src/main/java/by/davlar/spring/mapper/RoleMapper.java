@@ -3,6 +3,7 @@ package by.davlar.spring.mapper;
 import by.davlar.spring.database.entity.Role;
 import by.davlar.spring.dto.RoleDto;
 import by.davlar.spring.service.RoleService;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
         componentModel = "spring",
         unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE
 )
+@RequiredArgsConstructor
 public abstract class RoleMapper {
 
     @Autowired

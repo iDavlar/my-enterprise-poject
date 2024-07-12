@@ -1,12 +1,12 @@
 package by.davlar.spring.servlet;
 
-import by.davlar.spring.dto.CreateUserDto;
+import by.davlar.spring.dto.UserCreateEditDto;
 import by.davlar.spring.dto.RoleDto;
 import by.davlar.spring.exceptions.ValidationException;
 import by.davlar.spring.service.RoleService;
 import by.davlar.spring.service.UserService;
-import by.davlar.spring.utils.JspHelper;
-import by.davlar.spring.utils.UrlPath;
+import by.davlar.spring.http.utils.JspHelper;
+import by.davlar.spring.http.utils.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -41,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var userDto = CreateUserDto.builder()
+        var userDto = UserCreateEditDto.builder()
                 .firstName(req.getParameter("firstName"))
                 .lastName(req.getParameter("lastName"))
                 .birthday(req.getParameter("birthday"))

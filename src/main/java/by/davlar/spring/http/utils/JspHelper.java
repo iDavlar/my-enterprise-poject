@@ -1,4 +1,4 @@
-package by.davlar.spring.utils;
+package by.davlar.spring.http.utils;
 
 import lombok.experimental.UtilityClass;
 
