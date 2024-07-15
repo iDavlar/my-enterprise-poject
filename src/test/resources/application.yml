@@ -15,7 +15,8 @@ spring:
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
+      mode: embedded
 logging:
   level:
     root: INFO
+    org.springframework.test.context.cache: DEBUG

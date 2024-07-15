@@ -2,11 +2,13 @@ package by.davlar.spring.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
 
 @Data
 @Builder
+@FieldNameConstants
 public class UserReadDto {
     private Integer id;
     private String firstName;

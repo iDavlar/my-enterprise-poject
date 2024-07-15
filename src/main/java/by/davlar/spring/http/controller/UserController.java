@@ -86,10 +86,9 @@ public class UserController {
     }
 
     @GetMapping(UrlPath.REGISTRATION)
-    public String registration(HttpSession session, Model model) {
+    public String registrationGet(HttpSession session, Model model) {
         return Optional.ofNullable(session.getAttribute(SESSION.USER))
                 .map(value -> {
-                    model.addAttribute(MODEL.USERS, userService.findAll());
                     return redirect(UrlPath.USER + ((UserReadDto) value).getId());
                 })
                 .orElseGet(() -> {
@@ -100,15 +99,17 @@ public class UserController {
     }
 
     @PostMapping(UrlPath.REGISTRATION)
-    public String create(@ModelAttribute @Validated UserCreateEditDto userCreateEditDto,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
+    public String registrationPost(@ModelAttribute @Validated UserCreateEditDto userCreateEditDto,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes,
+                                   HttpSession session) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute(MODEL.USER, userCreateEditDto);
             redirectAttributes.addFlashAttribute(MODEL.ERRORS, bindingResult.getAllErrors());
             return redirect(UrlPath.REGISTRATION);
         }
         var userReadDto = userService.create(userCreateEditDto);
+        session.setAttribute(SESSION.USER, userReadDto);
         return redirect(UrlPath.USER + userReadDto.orElseThrow().getId());
     }
 

@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Value;
+import lombok.experimental.FieldNameConstants;
 
 @Value
 @Builder
+@FieldNameConstants
 public class UserCreateEditDto {
 
     private static final String NAME_MASK = "^[A-Za-zА-Яа-я]+$";
@@ -44,13 +46,6 @@ public class UserCreateEditDto {
 
     public static UserCreateEditDto newEmptyObject() {
         return UserCreateEditDto.builder()
-                .firstName(null)
-                .lastName(null)
-                .login(null)
-                .password(null)
-                .birthday(null)
-                .telephone(null)
-                .role(null)
                 .build();
     }
 }

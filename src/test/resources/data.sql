@@ -1,4 +1,13 @@
 
+SET REFERENTIAL_INTEGRITY FALSE;
+TRUNCATE TABLE pizzeria.order_entries RESTART IDENTITY;
+TRUNCATE TABLE pizzeria.orders RESTART IDENTITY;
+TRUNCATE TABLE pizzeria.pizzas RESTART IDENTITY;
+TRUNCATE TABLE pizzeria.address RESTART IDENTITY;
+TRUNCATE TABLE pizzeria.users RESTART IDENTITY;
+TRUNCATE TABLE pizzeria.roles RESTART IDENTITY;
+SET REFERENTIAL_INTEGRITY TRUE;
+
 insert into pizzeria.roles (name, isAdmin)
 values ('ADMIN', true),
        ('USER', false);
@@ -8,7 +17,8 @@ VALUES ('Даниил', 'Ардюков', '1997-11-28', 'Davlar', '123456', '880
        ('Егор', 'Носов', '1990-01-30', 'EgorNos', '123456', '454647', 2),
        ('Глеб', 'Дмитриев', '2002-07-15', 'GlebDmi', '123456', '+79023456789', 2),
        ('Анна', 'Петрова', '1980-01-10', 'PetrovAn', '123456', '332244', 2),
-       ('Мария', 'Павлова', '1997-03-20', 'MashPaw', '123456', '89021234567', 2);
+       ('Мария', 'Павлова', '1997-03-20', 'MashPaw', '123456', '89021234567', 2),
+       ('NoDependency', 'User', '2000-01-01', 'NoDependency', '123456', '78000000000', 2);
 
 insert into pizzeria.address (user_id, city, region, street, apartment)
 VALUES (1, 'Актау', null, '3 - 9', '15'),
