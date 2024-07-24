@@ -5,6 +5,23 @@
     <title>All users</title>
 </head>
 <body>
+<form action="/users">
+    <label for="login">Login:
+        <input id="login" type="text" name="login" th:value="${filter.login}">
+    </label>
+    <label for="firstname">Firstname:
+        <input id="firstname" type="text" name="firstname" th:value="${filter.firstName}">
+    </label>
+    <label for="birthday">Birthdate:
+        <input id="birthday" type="date" name="birthday" th:value="${filter.birthday}">
+    </label>
+    <br>
+    <div th:each="sort : ${sorts}">
+        <input th:id="${sort}" type="radio" name="sort" th:value="${sort}">
+        <label th:for="${sort}" th:text="${sort}">Sort</label>
+    </div>
+    <button type="submit">Filter</button>
+</form>
 <div th:each="user : ${users}">
     <a th:href="@{'/user/' + ${user.id}}" th:text="|${user.id}. ${user.login}|">User</a>
 </div>

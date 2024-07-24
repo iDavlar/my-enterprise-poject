@@ -5,13 +5,16 @@ import by.davlar.spring.database.projection.OrdersSumPerUser;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
 import static by.davlar.spring.database.utils.EntityGraphHelper.WITH_ROLE;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository
+        extends JpaRepository<User, Integer>,
+        QuerydslPredicateExecutor<User> {
 
     @EntityGraph(value = WITH_ROLE)
     Optional<User> findByLoginAndPassword(String login, String password);

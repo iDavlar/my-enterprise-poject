@@ -44,7 +44,6 @@ public class User implements BaseEntity<Integer> {
     private String telephone;
 
     @ManyToOne(
-            cascade = {CascadeType.MERGE},
             optional = false,
             fetch = FetchType.LAZY
     )

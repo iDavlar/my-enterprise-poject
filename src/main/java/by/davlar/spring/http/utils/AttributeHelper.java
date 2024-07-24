@@ -14,11 +14,14 @@ public class AttributeHelper {
     }
 
     public class ModelAttributesHandler {
+        public final String PIZZAS = "pizzas";
         public final String ERRORS = "errors";
         public final String ROLES = "roles";
         public final String USER = "user";
         public final String USERS = "users";
         public final String LOGIN = "login";
         public final String PASSWORD = "password";
+        public final String FILTER = "filter";
+        public final String SORTS = "sorts";
     }
 }

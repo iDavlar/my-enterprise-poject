@@ -23,15 +23,15 @@ public abstract class RoleMapper {
     public static RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 
     @Mapping(target = "users", ignore = true)
-    public abstract Role RoleDtoToRole(RoleDto dto);
+    public abstract Role mapToRole(RoleDto dto);
 
-    public abstract RoleDto RoleToDto(Role role);
+    public abstract RoleDto mapToRoleDto(Role role);
 
-    Role NameToRole(String name) {
+    public Role mapNameToRole(String name) {
         var roleDto = roleService.findByName(name);
         if (roleDto.isEmpty()) {
             roleDto = roleService.getDefault();
         }
-        return roleDto.map(this::RoleDtoToRole).get();
+        return roleDto.map(this::mapToRole).get();
     }
 }

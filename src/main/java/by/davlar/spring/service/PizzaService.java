@@ -17,10 +17,10 @@ public class PizzaService {
     private final PizzaRepository pizzaRepository;
     private final PizzaMapper pizzaMapper;
 
-    Page<PizzaDto> findAll(Pageable pageable) {
+    public Page<PizzaDto> findAll(Pageable pageable) {
         log.info("findAll(pageable = {})", pageable);
         return pizzaRepository.findAll(pageable)
-                .map(pizzaMapper::PizzaToPizzaDto);
+                .map(pizzaMapper::mapToPizzaDto);
     }
 
 }

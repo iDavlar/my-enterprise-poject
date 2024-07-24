@@ -2,12 +2,16 @@ package by.davlar.spring.http.controller;
 
 import by.davlar.spring.dto.UserCreateEditDto;
 import by.davlar.spring.dto.UserReadDto;
+import by.davlar.spring.dto.filter.UserFilter;
+import by.davlar.spring.dto.manager.UserDtoManager;
+import by.davlar.spring.dto.predicate.QPredicates;
 import by.davlar.spring.http.utils.TemplatePath;
 import by.davlar.spring.http.utils.UrlPath;
 import by.davlar.spring.service.RoleService;
 import by.davlar.spring.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +34,16 @@ public class UserController {
     private final RoleService roleService;
 
     @GetMapping(UrlPath.ALL_USERS)
-    public String findAll(HttpSession httpSession, Model model) {
+    public String findAll(HttpSession httpSession,
+                          Model model,
+                          UserFilter filter,
+                          Sort sort) {
+
         return Optional.ofNullable(httpSession.getAttribute(SESSION.USER))
                 .map(value -> {
-                    model.addAttribute(MODEL.USERS, userService.findAll());
+                    model.addAttribute(MODEL.USERS, userService.findAll(filter, sort));
+                    model.addAttribute(MODEL.FILTER, filter);
+                    model.addAttribute(MODEL.SORTS, UserDtoManager.getSortFields());
                     return TemplatePath.ALL_USERS;
                 })
                 .orElse(redirect(UrlPath.LOGIN));

@@ -21,19 +21,19 @@ public class RoleService {
     public List<RoleDto> findAll() {
         log.info("findAll()");
         return roleDao.findAll().stream()
-                .map(roleMapper::RoleToDto)
+                .map(roleMapper::mapToRoleDto)
                 .collect(Collectors.toList());
     }
 
     public Optional<RoleDto> findByName(String name) {
         log.info("findByName(name = {})", name);
         return roleDao.findByName(name)
-                .map(roleMapper::RoleToDto);
+                .map(roleMapper::mapToRoleDto);
     }
 
     public Optional<RoleDto> getDefault() {
         log.info("getDefault()");
         return roleDao.findById(roleDao.getDefaultId())
-                .map(roleMapper::RoleToDto);
+                .map(roleMapper::mapToRoleDto);
     }
 }

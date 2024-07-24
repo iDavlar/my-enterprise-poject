@@ -34,7 +34,7 @@
 <div th:if="${errors}">
     <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
 </div>
-<form th:action="@{/user/{id}/delete(id=${user.id})}" th:if="${session.user.role.isAdmin}" method="post">
+<form th:action="@{/user/{id}/delete(id=${user.id})}" th:if="${session.user.role.isAdmin AND session.user.id != user.id}" method="post">
     <button type="submit">Remove</button>
 </form>
 </body>

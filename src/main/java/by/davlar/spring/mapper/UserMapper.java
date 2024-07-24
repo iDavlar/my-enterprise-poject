@@ -3,11 +3,8 @@ package by.davlar.spring.mapper;
 import by.davlar.spring.database.entity.User;
 import by.davlar.spring.dto.UserCreateEditDto;
 import by.davlar.spring.dto.UserReadDto;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
@@ -50,7 +47,7 @@ public abstract class UserMapper {
         user.setLogin(dto.getLogin());
         user.setPassword(dto.getPassword());
         user.setTelephone(dto.getTelephone());
-        user.setRole(roleMapper.NameToRole(dto.getRole()));
+        user.setRole(roleMapper.mapNameToRole(dto.getRole()));
         return user;
     }
 

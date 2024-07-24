@@ -23,6 +23,8 @@ import java.util.Optional;
 import static by.davlar.spring.dto.UserCreateEditDto.Fields.*;
 import static by.davlar.spring.http.utils.AttributeHelper.MODEL;
 import static by.davlar.spring.http.utils.AttributeHelper.SESSION;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
 public class UserControllerIT {
+    public static final String NEW_USER_NAME = "TestTest";
     private final MockMvc mockMvc;
     private final UserService userService;
 
@@ -196,13 +199,16 @@ public class UserControllerIT {
     void postUpdate_changeUserFirstName_successAndRedirectToUserId() throws Exception {
         var user = userService.findById(USER_ID).orElseThrow();
         var editUserParams = createEditUserParams(user);
-        editUserParams.set(firstName, "Test1234567");
+        editUserParams.set(firstName, NEW_USER_NAME);
         mockMvc.perform(post(USER_UPDATE_URL)
                         .params(editUserParams))
                 .andExpectAll(
                         status().is3xxRedirection(),
-                        redirectedUrl(USER_URL_2)
+                        redirectedUrl(USER_URL_2),
+                        flash().attribute(MODEL.ERRORS, Matchers.nullValue())
                 );
+        var user2 = userService.findById(USER_ID).orElseThrow();
+        assertEquals(user2.getFirstName(), NEW_USER_NAME);
     }
 
     @Test

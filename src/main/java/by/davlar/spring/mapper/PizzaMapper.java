@@ -11,7 +11,7 @@ public abstract class PizzaMapper {
 
 //    PizzaMapper INSTANCE = Mappers.getMapper(PizzaMapper.class);
 
-    public abstract Pizza PizzaDtoToPizza(PizzaDto pizzaDto);
+    public abstract Pizza mapToPizza(PizzaDto pizzaDto);
 
-    public abstract PizzaDto PizzaToPizzaDto(Pizza pizza);
+    public abstract PizzaDto mapToPizzaDto(Pizza pizza);
 }

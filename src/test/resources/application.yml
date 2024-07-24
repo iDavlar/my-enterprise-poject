@@ -19,4 +19,4 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.test.context.cache: DEBUG
+    org.springframework.test.context.cache: off

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+</head>
+<body>
+<form action="/pizzas">
+    <div>
+        <label for="page">Page:
+            <input id="page" type="number" name="page" th:value="${pizzas.metadata.page}">
+        </label>
+        <label for="size">Size:
+            <input id="size" type="number" name="size" th:value="${pizzas.metadata.size}">
+        </label>
+    </div>
+
+    <button type="submit">Filter</button>
+</form>
+<div th:each="pizza : ${pizzas.content}">
+    <div th:text="|${pizza.id}. ${pizza.name}|">Pizza</div>
+</div>
+</body>
+</html>
