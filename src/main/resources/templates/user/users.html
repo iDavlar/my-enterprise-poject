@@ -23,7 +23,7 @@
     <button type="submit">Filter</button>
 </form>
 <div th:each="user : ${users}">
-    <a th:href="@{'/user/' + ${user.id}}" th:text="|${user.id}. ${user.login}|">User</a>
+    <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.login}|">User</a>
 </div>
 </body>
 </html>

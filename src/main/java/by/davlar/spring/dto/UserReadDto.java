@@ -19,4 +19,5 @@ public class UserReadDto {
     private String telephone;
     private Integer roleId;
     private RoleDto role;
+    private String image;
 }

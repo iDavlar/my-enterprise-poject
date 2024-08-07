@@ -6,8 +6,11 @@ import by.davlar.spring.dto.UserReadDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 @Mapper(
@@ -25,6 +28,7 @@ public abstract class UserMapper {
 //    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "birthday", expression = "java( Date.valueOf(dto.getBirthday()) )")
+    @Mapping(target = "image", expression = "java( multipartFileToString(dto.getImage(), \"\") )")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orders", ignore = true)
     @Mapping(target = "addresses", ignore = true)
@@ -48,7 +52,15 @@ public abstract class UserMapper {
         user.setPassword(dto.getPassword());
         user.setTelephone(dto.getTelephone());
         user.setRole(roleMapper.mapNameToRole(dto.getRole()));
+        user.setImage(multipartFileToString(dto.getImage(), user.getImage()));
         return user;
+    }
+
+    public String multipartFileToString(MultipartFile file, String defaultPath) {
+        return Optional.ofNullable(file)
+                .filter(Predicate.not(MultipartFile::isEmpty))
+                .map(MultipartFile::getOriginalFilename)
+                .orElse(defaultPath);
     }
 
 

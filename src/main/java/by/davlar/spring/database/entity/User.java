@@ -42,6 +42,7 @@ public class User implements BaseEntity<Integer> {
     private String login;
     private String password;
     private String telephone;
+    private String image;
 
     @ManyToOne(
             optional = false,

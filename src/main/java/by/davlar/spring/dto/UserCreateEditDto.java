@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.web.multipart.MultipartFile;
 
 @Value
 @Builder
@@ -43,6 +44,7 @@ public class UserCreateEditDto {
     @NotNull
     @NotEmpty
     String role;
+    MultipartFile image;
 
     public static UserCreateEditDto newEmptyObject() {
         return UserCreateEditDto.builder()

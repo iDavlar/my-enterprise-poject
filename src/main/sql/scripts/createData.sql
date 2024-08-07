@@ -38,7 +38,8 @@ create table pizzeria.users
     login      char(30)                      not null,
     password   char(20)                      not null,
     telephone  char(20)                      not null,
-    role       int references pizzeria.roles not null
+    role       int references pizzeria.roles not null,
+    image      char(128)
 );
 
 create table pizzeria.address

@@ -1,6 +1,5 @@
 package by.davlar.spring.service;
 
-import by.davlar.spring.database.entity.QUser;
 import by.davlar.spring.database.entity.User;
 import by.davlar.spring.database.repository.UserRepository;
 import by.davlar.spring.dto.UserCreateEditDto;
@@ -8,21 +7,20 @@ import by.davlar.spring.dto.UserReadDto;
 import by.davlar.spring.dto.filter.UserFilter;
 import by.davlar.spring.dto.predicate.QPredicates;
 import by.davlar.spring.mapper.UserMapper;
-import com.querydsl.core.types.Predicate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static by.davlar.spring.database.entity.QUser.user;
 
@@ -33,7 +31,7 @@ import static by.davlar.spring.database.entity.QUser.user;
 public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final RoleService roleService;
+    private final ImageService imageService;
 
     public List<UserReadDto> findAll() {
         log.info("findAll()");
@@ -73,7 +71,10 @@ public class UserService {
 //        }
 
         return Optional.of(userCreateEditDto)
-                .map(userMapper::mapToUser)
+                .map(dto -> {
+                    uploadImage(dto.getImage());
+                    return userMapper.mapToUser(dto);
+                })
                 .map(userRepository::save)
                 .map(userMapper::mapToUserReadDto);
     }
@@ -98,7 +99,10 @@ public class UserService {
     @Transactional
     public UserReadDto update(Integer id, UserCreateEditDto userCreateEditDto) {
         return userRepository.findById(id)
-                .map(entity -> userMapper.mapToUser(userCreateEditDto, entity))
+                .map(entity -> {
+                    uploadImage(userCreateEditDto.getImage());
+                    return userMapper.mapToUser(userCreateEditDto, entity);
+                })
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::mapToUserReadDto)
                 .orElseThrow();
@@ -114,5 +118,22 @@ public class UserService {
                 .map(userRepository::save)
                 .map(userMapper::mapToUserReadDto);
 
+    }
+
+    public Optional<byte[]> findAvatar(Integer id) {
+        return userRepository.findById(id)
+                .map(User::getImage)
+                .filter(StringUtils::hasText)
+                .flatMap(imageService::get);
+    }
+
+    @SneakyThrows
+    private void uploadImage(MultipartFile image) {
+        if (image != null && !image.isEmpty()) {
+            imageService.upload(
+                    image.getOriginalFilename(),
+                    image.getInputStream()
+            );
+        }
     }
 }

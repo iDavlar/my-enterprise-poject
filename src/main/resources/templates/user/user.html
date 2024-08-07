@@ -5,7 +5,7 @@
     <title>Login</title>
 </head>
 <body>
-<form th:action="@{/user/{id}/update(id=${user.id})}" method="post" th:object="${user}">
+<form th:action="@{/user/{id}/update(id=${user.id})}" enctype="multipart/form-data" method="post" th:object="${user}">
     <label for="login">Login:
         <input id="login" type="text" name="login" placeholder="Enter login" th:value="*{login}">
     </label><br>
@@ -24,9 +24,15 @@
     <label for="telephone">Telephone:
         <input id="telephone" type="text" name="telephone" th:value="*{telephone}">
     </label><br>
-
+    <div th:if="*{image}">
+        <img th:src="@{/api/v2/users/{userId}/avatar(userId=*{id})}" alt="User image">
+    </div>
+    <label for="image">Image:
+        <input id="image" type="file" name="image">
+    </label><br>
     <div th:each="role : ${roles}">
-        <input th:id="${role.id}" type="radio" name="role" th:value="${role.name}" th:checked="${role.name == user.role.name}">
+        <input th:id="${role.id}" type="radio" name="role" th:value="${role.name}"
+               th:checked="${role.name == user.role.name}">
         <label th:for="${role.id}" th:text="${role.name}">Role name</label>
     </div>
     <button type="submit">Update</button>
@@ -34,7 +40,8 @@
 <div th:if="${errors}">
     <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
 </div>
-<form th:action="@{/user/{id}/delete(id=${user.id})}" th:if="${session.user.role.isAdmin AND session.user.id != user.id}" method="post">
+<form th:action="@{/user/{id}/delete(id=${user.id})}"
+      th:if="${session.user.role.isAdmin AND session.user.id != user.id}" method="post">
     <button type="submit">Remove</button>
 </form>
 </body>
