@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.envers.Audited;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Table(name = "roles", schema = "pizzeria")
 @Audited
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "Roles")
-public class Role implements BaseEntity<Integer> {
+public class Role implements BaseEntity<Integer>, GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -37,5 +38,10 @@ public class Role implements BaseEntity<Integer> {
         if (name != null) {
             name = name.trim();
         }
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.getName();
     }
 }

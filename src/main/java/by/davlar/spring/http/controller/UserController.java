@@ -34,66 +34,54 @@ public class UserController {
     private final RoleService roleService;
 
     @GetMapping(UrlPath.ALL_USERS)
-    public String findAll(HttpSession httpSession,
-                          Model model,
+    public String findAll(Model model,
                           UserFilter filter,
                           Sort sort) {
 
-        return Optional.ofNullable(httpSession.getAttribute(SESSION.USER))
-                .map(value -> {
-                    model.addAttribute(MODEL.USERS, userService.findAll(filter, sort));
-                    model.addAttribute(MODEL.FILTER, filter);
-                    model.addAttribute(MODEL.SORTS, UserDtoManager.getSortFields());
-                    return TemplatePath.ALL_USERS;
-                })
-                .orElse(redirect(UrlPath.LOGIN));
-//        model.addAttribute(MODEL.USERS, userService.findAll());
-//        return TemplatePath.ALL_USERS;
+        model.addAttribute(MODEL.USERS, userService.findAll(filter, sort));
+        model.addAttribute(MODEL.FILTER, filter);
+        model.addAttribute(MODEL.SORTS, UserDtoManager.getSortFields());
+        return TemplatePath.ALL_USERS;
     }
 
     @GetMapping(UrlPath.USER_ID)
     public String findById(@PathVariable("id") Integer id,
                            HttpSession httpSession,
                            Model model) {
-        return Optional.ofNullable(httpSession.getAttribute(SESSION.USER))
-                .map(user -> userService.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)))
+        return userService.findById(id)
                 .map(user -> {
                     model.addAttribute(MODEL.USER, user);
                     model.addAttribute(MODEL.ROLES, roleService.findAll());
                     return TemplatePath.USER;
                 })
-                .orElse(redirect(UrlPath.LOGIN));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping(UrlPath.LOGIN)
     public String login(HttpSession session) {
-        return Optional.ofNullable(session.getAttribute(SESSION.USER))
-                .map(value -> {
-                    return redirect(UrlPath.USER + ((UserReadDto) value).getId());
-                })
-                .orElse(TemplatePath.LOGIN);
+        return TemplatePath.LOGIN;
     }
 
-    @PostMapping(UrlPath.LOGIN)
-    public String loginPost(@RequestParam String login,
-                            @RequestParam String password,
-                            HttpSession session,
-                            RedirectAttributes redirectAttributes) {
-        return userService.login(login, password)
-                .map(userReadDto -> {
-                    session.setAttribute(SESSION.USER, userReadDto);
-                    if (userReadDto.getRole().getIsAdmin()) {
-                        return redirect(UrlPath.ALL_USERS);
-                    }
-                    return redirect(UrlPath.USER + userReadDto.getId());
-                })
-                .orElseGet(() -> {
-                    redirectAttributes.addFlashAttribute(MODEL.LOGIN, login);
-                    redirectAttributes.addFlashAttribute(MODEL.PASSWORD, password);
-                    return redirect(UrlPath.LOGIN);
-                });
-
-    }
+//    @PostMapping(UrlPath.LOGIN)
+//    public String loginPost(@RequestParam String login,
+//                            @RequestParam String password,
+//                            HttpSession session,
+//                            RedirectAttributes redirectAttributes) {
+//        return userService.login(login, password)
+//                .map(userReadDto -> {
+//                    session.setAttribute(SESSION.USER, userReadDto);
+//                    if (userReadDto.getRole().getIsAdmin()) {
+//                        return redirect(UrlPath.ALL_USERS);
+//                    }
+//                    return redirect(UrlPath.USER + userReadDto.getId());
+//                })
+//                .orElseGet(() -> {
+//                    redirectAttributes.addFlashAttribute(MODEL.LOGIN, login);
+//                    redirectAttributes.addFlashAttribute(MODEL.PASSWORD, password);
+//                    return redirect(UrlPath.LOGIN);
+//                });
+//
+//    }
 
     @GetMapping(UrlPath.REGISTRATION)
     public String registrationGet(HttpSession session, Model model) {

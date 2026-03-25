@@ -5,9 +5,12 @@
     <title>Login</title>
 </head>
 <body>
+<div style="color: red" th:if="${param.error}">
+    Invalid username and password.
+</div>
 <form th:action="@{/login}" method="post">
-    <label for="login">Login:
-        <input id="login" type="text" name="login" placeholder="Enter login" th:value = ${login}>
+    <label for="username">Login:
+        <input id="username" type="text" name="username" placeholder="Enter login" th:value = ${username}>
     </label><br>
     <label for="password">Password:
         <input id="password" type="password" name="password" placeholder="Enter password" th:value = ${password}>

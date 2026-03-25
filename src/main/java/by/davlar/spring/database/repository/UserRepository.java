@@ -34,4 +34,6 @@ public interface UserRepository
                    "join Pizza p on oe.pizza = p " +
                    "group by u")
     List<OrdersSumPerUser> findOrdersSumPerUser();
+
+    Optional<User> findByLogin(String login);
 }
